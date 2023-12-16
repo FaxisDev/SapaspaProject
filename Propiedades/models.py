@@ -3,6 +3,8 @@ from django.db import models
 from Contribuyentes.models import Contribuyente
 
 class TipoPropiedad(models.Model):
+    id = models.AutoField(primary_key=True)
+
     tipo = models.TextField(default=None)
     # Otros campos del modelo...
     fecha_creacion = models.DateTimeField(auto_now_add=True)
@@ -17,6 +19,7 @@ class TipoPropiedad(models.Model):
 
 # Create your models here.
 class Propiedad(models.Model):
+    id = models.AutoField(primary_key=True)
     numero_interior = models.TextField(null=True,blank=True,)
     numero_exterior = models.TextField(default=None)
     calle = models.TextField(default=None)

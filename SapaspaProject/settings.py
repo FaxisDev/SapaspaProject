@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Propiedades',
     'Tarifas',
     'Recibos',
+    'Servicios',
     'django_extensions',
 
 ]

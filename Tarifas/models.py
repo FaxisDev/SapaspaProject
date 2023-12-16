@@ -1,6 +1,7 @@
 from django.db import models
 
 class Tarifa(models.Model):
+    id = models.AutoField(primary_key=True)
     tipo = models.TextField(default=None)
     precio_base = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
     
