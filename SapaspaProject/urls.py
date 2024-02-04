@@ -14,9 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
+from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, TipoPropiedadListCreateView, TipoPropiedadDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('api/propiedades/', PropiedadListCreateView.as_view(), name='propiedad-list-create'),
+    path('api/propiedades/<int:pk>/', PropiedadDetailView.as_view(), name='propiedad-detail'),
+    path('api/tipo-propiedades', TipoPropiedadListCreateView.as_view(), name='tipo-propiedad-list-create'),
+    path('api/tipo-propiedades/<int:pk>/', TipoPropiedadDetailView.as_view(), name='tipo-propiedad-detail'),
+
 ]

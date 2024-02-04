@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Recibos',
     'Servicios',
     'django_extensions',
+    'rest_framework',
 
 ]
 
