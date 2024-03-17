@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'Tarifas',
     'Recibos',
     'Servicios',
+    'PreguntasFrecuentes',
     'django_extensions',
     'rest_framework',
+    'django_filters',
 
 ]
 

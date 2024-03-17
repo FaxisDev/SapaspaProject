@@ -6,6 +6,7 @@ class TipoPropiedad(models.Model):
     id = models.AutoField(primary_key=True)
 
     tipo = models.TextField(default=None)
+    descripcion = models.TextField(default=None)
     # Otros campos del modelo...
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
