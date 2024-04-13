@@ -26,10 +26,14 @@ SECRET_KEY = '5)r0u^6whww8zx8g@=rg9b+4@r_kiyn7fmi#-u9(5k=2l5o6t!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_ALLOW_ALL = False
 
-
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,7 +52,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'django_filters',
-
+    'corsheaders',
 ]
 
 # Configuración opcional para generar el diagrama en formatos específicos
@@ -58,6 +62,7 @@ GRAPH_MODELS = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
