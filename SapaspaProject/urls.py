@@ -18,6 +18,7 @@ from django.urls import path
 
 from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, TipoPropiedadListCreateView, TipoPropiedadDetailView
 from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetailView
+from Tarifas.views import TarifaListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,7 @@ urlpatterns = [
     path('api/tipo-propiedades/<int:pk>/', TipoPropiedadDetailView.as_view(), name='tipo-propiedad-detail'),
     path('api/contribuyentes', ContribuyenteListCreateView.as_view(), name='contribuyente-list-create'),
     path('api/contribuyentes/<int:pk>/', ContribuyenteDetailView.as_view(), name='contribuyente-detail'),
+
+    path('api/tarifas', TarifaListCreateView.as_view(), name='tarifa-list-create'),
 
 ]
