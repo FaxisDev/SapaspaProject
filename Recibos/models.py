@@ -16,15 +16,29 @@ class TipoPago(models.Model):
             verbose_name_plural = 'Tipos de pagos'
 
 
+# Create your models here.
+class Recibo(models.Model):
+    id = models.AutoField(primary_key=True)
+    propiedad = models.ForeignKey(Propiedad, on_delete=models.PROTECT,default=None)
+    tarifa = models.ForeignKey(Tarifa, on_delete=models.PROTECT,default=None)
+
+    # Otros campos del modelo...
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Recibo'
+        verbose_name_plural = 'Recibos'
+
 class Pago(models.Model):
     id = models.AutoField(primary_key=True)
+    recibo = models.ForeignKey(Recibo, on_delete=models.PROTECT,default=None)
     tipo_pago = models.ForeignKey(TipoPago, on_delete=models.PROTECT,default=None)
     servicio = models.ForeignKey(Servicio, on_delete=models.PROTECT,default=None)
     
     descuento = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
     sub_total = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
     total = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
-    adeudo = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
     mes_pago = models.DateField()
 
         # Otros campos del modelo...
@@ -36,20 +50,3 @@ class Pago(models.Model):
             verbose_name = 'Pago'
             verbose_name_plural = 'Pagos'
 
-# Create your models here.
-class Recibo(models.Model):
-    id = models.AutoField(primary_key=True)
-    propiedad = models.ForeignKey(Propiedad, on_delete=models.PROTECT,default=None)
-    tarifa = models.ForeignKey(Tarifa, on_delete=models.PROTECT,default=None)
-    pago = models.ForeignKey(Pago, on_delete=models.PROTECT,default=None)
-    
-
-    # Otros campos del modelo...
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_actualizacion = models.DateTimeField(auto_now=True)
-
-
-    
-    class Meta:
-        verbose_name = 'Recibo'
-        verbose_name_plural = 'Recibos'
