@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        Sapaspa - API
+    </title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+
+    <style>
+        body {
+            background: linear-gradient(to right, #6610f2, #b464ff);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #menu {
+            margin-top: 20px;
+        }
+
+        #menu a {
+            padding: 10px 35px;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .btn-outline-custom {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: #fff;
+            color: #6610f2;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 2px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<img src="{% static 'img/logo_white.svg' %}" alt="Logo" width="256" />
+
+    <h1>API Sapaspa</h1>
+    <p>Versión: 1.0.0</p>
+
+    <div id="menu">
+        <a href="{% url 'principal-page' %}" class="btn btn-outline-custom">Acceder</a>
+        <a href="http://localhost:3000" target="_blank" class="btn btn-outline-custom">Portal de Agua</a>
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+
+</html>

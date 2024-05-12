@@ -21,11 +21,15 @@ from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetai
 from Tarifas.views import TarifaListCreateView
 
 from Web.View.principal_views import principalView
+from Web.View.portal_views import portalView
+from Web.View.endpoints_page import endPointsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #Seccion Web Administrable
-    path('', principalView, name='principal-page'),
+    path('', portalView, name='principal-page'),
+    path('principal/', principalView, name='principal-page'),
+    path('endpoints/', endPointsView, name='endpoints-page'),
     #Seccion de API
     path('api/propiedades/', PropiedadListCreateView.as_view(), name='propiedad-list-create'),
     path('api/propiedades/<int:pk>/', PropiedadDetailView.as_view(), name='propiedad-detail'),
