@@ -20,9 +20,13 @@ from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, Tipo
 from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetailView
 from Tarifas.views import TarifaListCreateView
 
+from Web.View.principal_views import principalView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    #Seccion Web Administrable
+    path('', principalView, name='principal-page'),
+    #Seccion de API
     path('api/propiedades/', PropiedadListCreateView.as_view(), name='propiedad-list-create'),
     path('api/propiedades/<int:pk>/', PropiedadDetailView.as_view(), name='propiedad-detail'),
     path('api/tipo-propiedades', TipoPropiedadListCreateView.as_view(), name='tipo-propiedad-list-create'),
