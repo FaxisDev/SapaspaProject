@@ -6,37 +6,38 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <div class="card ">
-    <h1 class="card-title">Lista de Endpoints</h1>
-      <div class="card-body">
-          <div class="table-responsive">
-              <table class="table table-bordered mt-3">
-                  <thead class="bg-dark text-white">
-                      <tr>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">URL</th>
-                          <th scope="col">Argumentos</th>
-                          <th scope="col">Metodos</th>
-                          <th scope="col">Cadena de Búsqueda</th>
-                          <th scope="col">Acción</th> <!-- Nueva columna para el botón Ver -->
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {% for pattern in url_patterns %}
-                      <tr>
-                          <td>{{ pattern.name }}</td>
-                          <td>{{ pattern.url }}</td>
-                          <td>{{ pattern.default_args }}</td>
-                          <td>{{ pattern.methods }}</td>
-                          <td>{{ pattern.lookup_str }}</td>
-                          <td><a href="{{ pattern.url }}" class="btn btn-primary">Ver</a></td> <!-- Botón Ver que enlaza a la URL -->
-                      </tr>
-                      {% endfor %}
-                  </tbody>
-              </table>
-          </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">Lista de Endpoints</div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">URL</th>
+              <th scope="col">Argumentos</th>
+              <th scope="col">Metodos</th>
+              <th scope="col">Cadena de Búsqueda</th>
+              <th scope="col">Acción</th> <!-- Nueva columna para el botón Ver -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for pattern in url_patterns %}
+              <tr>
+                <td scope="row">{{ pattern.name }}</td>
+                <td>{{ pattern.url }}</td>
+                <td>{{ pattern.default_args }}</td>
+                <td>{{ pattern.methods }}</td>
+                <td>{{ pattern.lookup_str }}</td>
+                <td>
+                  <a href="{{ pattern.url }}" class="btn btn-primary">Ver</a>
+                </td> <!-- Botón Ver que enlaza a la URL -->
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
+    </div>
   </div>
-</div>
 {% endblock %}
