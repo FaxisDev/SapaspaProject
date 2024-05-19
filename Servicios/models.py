@@ -9,6 +9,9 @@ class Servicio(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.descripcion}"
+    
     class Meta:
             verbose_name = 'Servicio'
             verbose_name_plural = 'Servicios'

@@ -36,6 +36,9 @@ class Propiedad(models.Model):
     tipo_propiedad = models.ForeignKey(TipoPropiedad, on_delete=models.PROTECT,default=None)
     contribuyente = models.ForeignKey(Contribuyente, on_delete=models.PROTECT,default=None)
 
+    def __str__(self):
+        return f"({self.id}) {self.entre_calles} - {self.contribuyente}"  
+
     class Meta:
         verbose_name = 'Propiedad'
         verbose_name_plural = 'Propiedades'
