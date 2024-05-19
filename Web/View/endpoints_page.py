@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.urls import get_resolver
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def endPointsView(request):
     resolver = get_resolver()
     url_patterns = []
