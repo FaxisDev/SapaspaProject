@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, TipoPropiedadListCreateView, TipoPropiedadDetailView
 from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetailView
 from Tarifas.views import TarifaListCreateView
-from Recibos.views import ReciboListCreateView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView
+from Recibos.views import ReciboListCreateView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView, ObtenerPagosListView
 
 from Web.View.principal_views import principalView
 from Web.View.portal_views import portalView
@@ -48,4 +48,5 @@ urlpatterns = [
     path('api/recibos/<int:pk>/', ReciboDetailView.as_view(), name='Ver detalle de Recibos'),
     path('api/pago', PagoListCreateView.as_view(), name='Crear y ver lista de Pagos'),
     path('api/pago/<int:pk>/', PagoDetailView.as_view(), name='Ver detalle de Pagos'),
+    path('api/obtener-pago', ObtenerPagosListView.as_view(), name='Obtener lista pagos pendientes'),
 ]

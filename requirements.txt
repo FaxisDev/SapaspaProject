@@ -1,6 +1,9 @@
 asgiref==3.7.2
 autopep8==2.0.1
 Django==4.2.7
+django-admin==2.0.2
+django-admin-interface==0.28.6
+django-bootstrap5==23.3
 django-cors-headers==4.3.1
 django-extensions==3.2.3
 django-filter==24.1
@@ -8,4 +11,3 @@ djangorestframework==3.14.0
 Pillow==9.5.0
 pytz==2024.1
 sqlparse==0.4.4
-django_bootstrap5

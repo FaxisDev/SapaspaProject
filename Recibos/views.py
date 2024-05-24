@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.views import APIView
 from .models import Pago, Recibo, TipoPago
 from .filters import ReciboFilter
 from .serializers import PagoSerializer, ReciboSerializer, TipoPagoSerializer
@@ -45,3 +46,22 @@ class PagoDetailView(generics.RetrieveUpdateDestroyAPIView):
 class TipoPagoListView(generics.ListAPIView):
     queryset = TipoPago.objects.all()
     serializer_class = TipoPagoSerializer
+
+class ObtenerPagosListView(APIView):
+    def get(self, request):
+        id_propiedad = request.query_params.get('propiedad')
+
+        if id_propiedad:
+            #Obtenemos ultimo recibo generado a esa propiedad, en dado caso de no ser encontrado ninguno, se  tomara la fecha en la que se dio de alta el contribuyente
+            id_recibo = Recibo.objects.filter(propiedad=id_propiedad).latest('fecha_creacion')
+
+            if id_recibo:
+                #Obtenemos el ultimo pago para obtener fechas de cobro nuevas
+                ultimo_pago = Pago.objects.filter(recibo=id_recibo).latest('mes_pago')
+         
+                return Response({'fecha': ultimo_pago.mes_pago}, status=status.HTTP_200_OK)
+
+        return Response({
+            'status': 'success',
+            'data': 1
+        }, status=status.HTTP_200_OK)

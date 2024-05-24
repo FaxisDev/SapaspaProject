@@ -10,4 +10,4 @@ class WebConfig(AppConfig):
         from django.contrib import admin
         admin.site.site_title = _("Sapaspa - Panel de Administración")
         admin.site.site_header = _("Panel de administración")
-        admin.site.index_title = _("Bienvenido al Pnel de Administración de Agua Potable y Alcantarillado de San Pablo Atlalzalpan")
+        admin.site.index_title = _("Bienvenido al Panel de Administración de Agua Potable y Alcantarillado de San Pablo Atlalzalpan")
