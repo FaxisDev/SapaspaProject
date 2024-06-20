@@ -66,7 +66,6 @@ class ObtenerPagosListView(APIView):
         ).first()
 
         if not tarifa:
-
             return Response(
                 {
                     "message": "Actualmente no hay un precio disponible. Por favor, inténtalo de nuevo más tarde."
@@ -81,7 +80,7 @@ class ObtenerPagosListView(APIView):
 
         if id_propiedad:
             try:
-                # Obtenemos ultimo recibo generado a esa propiedad, en dado caso de no ser encontrado ninguno, se  tomara la fecha en la que se dio de alta el contribuyente
+                # Obtenemos el último recibo generado a esa propiedad
                 id_recibo = Recibo.objects.filter(propiedad=id_propiedad).latest(
                     "fecha_creacion"
                 )
@@ -93,7 +92,7 @@ class ObtenerPagosListView(APIView):
                     )
 
                     # Obtener la fecha del último pago
-                    ultima_fecha_pago = ultimo_pago.mes_pago
+                    ultima_fecha_pago = ultimo_pago.mes_pago.date()
 
                     # Incrementar mes a mes desde el último pago hasta la fecha actual
                     fecha_proximo_pago = ultima_fecha_pago
@@ -123,12 +122,12 @@ class ObtenerPagosListView(APIView):
 
             except Recibo.DoesNotExist:
                 # Si no se encuentra ningún recibo, usamos la fecha de creación de la propiedad
-
                 ultimo_pago = Propiedad.objects.filter(pk=id_propiedad).first()
                 if ultimo_pago is None:
                     return Response([], status=status.HTTP_404_NOT_FOUND)
+                
                 # Obtener la fecha del último pago
-                ultima_fecha_pago = ultimo_pago.fecha_creacion
+                ultima_fecha_pago = ultimo_pago.fecha_creacion.date()
 
                 # Incrementar mes a mes desde el último pago hasta la fecha actual
                 fecha_proximo_pago = ultima_fecha_pago
