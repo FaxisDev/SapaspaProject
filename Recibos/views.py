@@ -9,7 +9,6 @@ from .serializers import PagoSerializer, ReciboSerializer, TipoPagoSerializer
 from rest_framework.response import Response  # type: ignore
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
-from django.http import JsonResponse
 
 
 class ReciboListCreateView(generics.ListCreateAPIView):
@@ -125,7 +124,7 @@ class ObtenerPagosListView(APIView):
                 ultimo_pago = Propiedad.objects.filter(pk=id_propiedad).first()
                 if ultimo_pago is None:
                     return Response([], status=status.HTTP_404_NOT_FOUND)
-                
+
                 # Obtener la fecha del último pago
                 ultima_fecha_pago = ultimo_pago.fecha_creacion.date()
 
@@ -156,4 +155,9 @@ class ObtenerPagosListView(APIView):
 
                 return Response(lista_pagos, status=status.HTTP_200_OK)
 
-        return Response([], status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {
+                "message": "No hay pagos pendientes en este momento."
+            },
+            status=status.HTTP_204_NO_CONTENT,
+        )
