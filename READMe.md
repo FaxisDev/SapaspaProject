@@ -27,3 +27,30 @@ A continuación se detallan los pasos para desplegar el proyecto Django.
    ```bash
    git clone https://github.com/tu-usuario/tu-proyecto.git
    cd tu-proyecto
+
+
+# Instalar virtualenv si no lo tienes
+pip3 install virtualenv
+
+## Si no existe el archivo venv lo generamos con
+python3 -m virtualenv venv
+
+# Activar el entorno virtual (Linux/macOS)
+source venv/bin/activate
+
+# Activar el entorno virtual (Windows)
+.\venv\Scripts\activate
+
+# Instalar dependencias en el proyecto
+pip3 install -r requirements.txt
+
+# Desactivar el entorno virtual
+deactivate
+
+
+## Para Generar el archivo .dot para modelo relacional actual es
+ ``` python3 manage.py graph_models -a -o my_models.dot  ```
+
+#El resultado de codigo lo pegamos en el sitio:
+https://dreampuf.github.io/GraphvizOnline/
+
