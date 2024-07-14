@@ -22,6 +22,7 @@ from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, Tipo
 from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetailView
 from Tarifas.views import TarifaListCreateView
 from Recibos.views import ReciboListCreateView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView, ObtenerPagosListView
+from Servicios.views import TarifaListView
 
 from Web.View.principal_views import principalView
 from Web.View.portal_views import portalView
@@ -49,4 +50,6 @@ urlpatterns = [
     path('api/pago', PagoListCreateView.as_view(), name='Crear y ver lista de Pagos'),
     path('api/pago/<int:pk>/', PagoDetailView.as_view(), name='Ver detalle de Pagos'),
     path('api/obtener-pago', ObtenerPagosListView.as_view(), name='Obtener lista pagos pendientes'),
+    path('api/servicios/', TarifaListView.as_view(), name='propiedad-list'),
+    
 ]
