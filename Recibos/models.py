@@ -39,7 +39,7 @@ class Recibo(models.Model):
 
 class Pago(models.Model):
     id = models.AutoField(primary_key=True)
-    recibo = models.ForeignKey(Recibo, on_delete=models.PROTECT,default=None)
+    recibo = models.ForeignKey(Recibo, on_delete=models.CASCADE,default=None)
     servicio = models.ForeignKey(Servicio, on_delete=models.PROTECT,default=None)
     
     descuento = models.DecimalField(max_digits =15 ,decimal_places=2, default=0.0)
@@ -50,6 +50,9 @@ class Pago(models.Model):
         # Otros campos del modelo...
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.id} - {self.mes_pago}, Total: {self.total}"  
 
 
     class Meta:

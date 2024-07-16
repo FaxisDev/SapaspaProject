@@ -143,13 +143,18 @@ USE_L10N = True
 USE_TZ = True
 
 
+#Maximo de registros en edicion
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 
+
 STATICFILES_DIRS = [
-    BASE_DIR / "Web/Static",
+    
+    os.path.join(BASE_DIR, "Web/static"),
 ]
 
 LOGIN_URL = '/admin/login/'  # Ruta a tu página de inicio de sesión

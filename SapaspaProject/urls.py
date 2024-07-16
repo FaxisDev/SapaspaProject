@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from Propiedades.views import PropiedadListCreateView, PropiedadDetailView, TipoPropiedadListCreateView, TipoPropiedadDetailView
 from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetailView
 from Tarifas.views import TarifaListCreateView
-from Recibos.views import ReciboListCreateView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView, ObtenerPagosListView
+from Recibos.views import ReciboListView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView, ObtenerPagosListView, GenerarReciboView
 from Servicios.views import TarifaListView
 
 from Web.View.principal_views import principalView
@@ -45,11 +45,12 @@ urlpatterns = [
     path('api/contribuyentes/<int:pk>/', ContribuyenteDetailView.as_view(), name='contribuyente-detail'),
     path('api/tarifas', TarifaListCreateView.as_view(), name='tarifa-list-create'),
     path('api/tipo-pagos', TipoPagoListView.as_view(), name='Ver lista de tipo de Pagos'),
-    path('api/recibos', ReciboListCreateView.as_view(), name='Crear y ver lista de Recibos'),
+    path('api/recibos', ReciboListView.as_view(), name='Crear y ver lista de Recibos'),
     path('api/recibos/<int:pk>/', ReciboDetailView.as_view(), name='Ver detalle de Recibos'),
     path('api/pago', PagoListCreateView.as_view(), name='Crear y ver lista de Pagos'),
     path('api/pago/<int:pk>/', PagoDetailView.as_view(), name='Ver detalle de Pagos'),
     path('api/obtener-pago', ObtenerPagosListView.as_view(), name='Obtener lista pagos pendientes'),
+    path('api/generar-recibo',GenerarReciboView.as_view(), name='Generar recibo con pagos'),
     path('api/servicios/', TarifaListView.as_view(), name='propiedad-list'),
     
 ]

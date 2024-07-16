@@ -199,3 +199,22 @@ html[data-bs-theme="dark"] .theme-toggle .fa-moon {
 html[data-bs-theme="light"] .theme-toggle .fa-sun {
     display: none;
 }
+
+.custom-card {
+    border: 2px solid #007BFF; /* Borde azul */
+    box-shadow: 0 4px 8px 0 rgba(0, 123, 255, 0.2); /* Sombra azul */
+    text-align: center; /* Texto centralizado */
+    margin-bottom: 20px; /* Espaciado entre tarjetas */
+}
+
+.custom-card-title {
+    font-size: 1.2em; /* Título simple */
+    font-weight: bold; /* Negrita */
+    color: #007BFF; /* Color azul */
+}
+
+.custom-card-text {
+    font-size: 1.5em; /* Tamaño de texto más grande */
+    font-weight: bold; /* Negrita */
+    color: #333; /* Color de texto */
+}

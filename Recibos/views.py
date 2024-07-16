@@ -1,17 +1,20 @@
 from Tarifas.serializers import TarifaSerializer
 from rest_framework import generics, status
 from rest_framework.views import APIView
-from .models import Pago, Recibo, TipoPago
-from Propiedades.models import Propiedad
-from Tarifas.models import Tarifa
-from .filters import ReciboFilter
-from .serializers import PagoSerializer, ReciboSerializer, TipoPagoSerializer
 from rest_framework.response import Response  # type: ignore
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
+from .filters import ReciboFilter
+import json
 
+from .serializers import PagoSerializer, ReciboSerializer, TipoPagoSerializer
 
-class ReciboListCreateView(generics.ListCreateAPIView):
+from Propiedades.models import Propiedad
+from Servicios.models import Servicio
+from Tarifas.models import Tarifa
+from .models import Pago, Recibo, TipoPago
+
+class ReciboListView(generics.ListAPIView):
     queryset = Recibo.objects.all()
     serializer_class = ReciboSerializer
     filter_backends = [DjangoFilterBackend]
@@ -67,6 +70,7 @@ class ObtenerPagosListView(APIView):
         if not tarifa:
             return Response(
                 {
+                    "title": "Precio No Disponible",
                     "message": "Actualmente no hay un precio disponible. Por favor, inténtalo de nuevo más tarde."
                 },
                 status=status.HTTP_404_NOT_FOUND,
@@ -91,7 +95,7 @@ class ObtenerPagosListView(APIView):
                     )
 
                     # Obtener la fecha del último pago
-                    ultima_fecha_pago = ultimo_pago.mes_pago.date()
+                    ultima_fecha_pago = ultimo_pago.mes_pago
 
                     # Incrementar mes a mes desde el último pago hasta la fecha actual
                     fecha_proximo_pago = ultima_fecha_pago
@@ -117,6 +121,15 @@ class ObtenerPagosListView(APIView):
                                     "descuento": 0,
                                 }
                             )
+                    
+                    if not lista_pagos:
+                        return Response(
+                            {
+                                "title": "¡Estas al dia!",
+                                "message": "No hay pagos pendientes en este momento.",
+                            },
+                            status=status.HTTP_200_OK
+                        )
                 return Response(lista_pagos, status=status.HTTP_200_OK)
 
             except Recibo.DoesNotExist:
@@ -157,7 +170,82 @@ class ObtenerPagosListView(APIView):
 
         return Response(
             {
-                "message": "No hay pagos pendientes en este momento."
+                "title": "¡Estas al dia!",
+                "message": "No hay pagos pendientes en este momento.",
             },
-            status=status.HTTP_204_NO_CONTENT,
+            status=status.HTTP_200_OK
+        )
+
+
+class GenerarReciboView(APIView):
+    def post(self, request):
+        id_propiedad = request.data.get("id_propiedad")
+        pagos = request.data.get("pagos")
+
+        if not id_propiedad or not pagos:
+            return Response(
+                {"message": "id_propiedad y pagos son campos requeridos."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Fecha actual
+        fecha_actual = timezone.now().date()
+
+        # Obtener Tarifa actual
+        tarifa = Tarifa.objects.filter(
+            fecha_inicio_vigencia__lt=fecha_actual, fecha_fin_vigencia__gt=fecha_actual
+        ).first()
+
+        if not tarifa:
+            return Response(
+                {
+                    "message": "Actualmente no hay un precio disponible. Por favor, inténtalo de nuevo más tarde."
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Obtener TipoPago correspondiente (ejemplo: ID 2)
+        try:
+            tipo_pago = TipoPago.objects.get(id=2)
+        except TipoPago.DoesNotExist:
+            return Response(
+                {"message": "Tipo de pago no encontrado."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        
+        # Obtener la instancia de Propiedad correspondiente
+        try:
+            propiedad = Propiedad.objects.get(id=id_propiedad)
+        except Propiedad.DoesNotExist:
+            return Response(
+                {"message": "Propiedad no encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Crear Recibo
+        recibo = Recibo.objects.create(propiedad=propiedad, tipo_pago=tipo_pago, tarifa=tarifa)
+
+        # Crear Pagos asociados
+        for pago_data in pagos:
+            servicio_id = pago_data.get("servicio")
+            try:
+                servicio = Servicio.objects.get(id=servicio_id)
+            except Servicio.DoesNotExist:
+                return Response(
+                    {"message": f"Servicio con id {servicio_id} no existe."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            Pago.objects.create(
+                recibo=recibo,
+                servicio=servicio,
+                mes_pago=pago_data.get("mes_pago"),
+                sub_total=pago_data.get("sub_total"),
+                total=pago_data.get("total"),
+                descuento=pago_data.get("descuento", 0)
+            )
+
+        return Response(
+            {"id_recibo": recibo.id, "message": "El recibo ha sido generado y ahora puedes descargarlo o visualizarlo en tu perfil, en la pestaña de recibos."},
+            status=status.HTTP_201_CREATED,
         )
