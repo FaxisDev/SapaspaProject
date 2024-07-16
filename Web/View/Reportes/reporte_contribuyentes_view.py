@@ -2,11 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Q
-from datetime import datetime
 import csv
 
-from Contribuyentes.models import Contribuyente
-from Propiedades.models import Propiedad, TipoPropiedad
+from Propiedades.models import Propiedad
 from .forms import ContribuyenteSearchForm
 
 @login_required
