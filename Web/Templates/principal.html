@@ -8,20 +8,12 @@ Panel de control
 {% block content %}
 <div class="container-fluid">
     <h1>Panel de Control</h1>
-    <div class="row">
-        <!-- Tarifas Activas -->
-        <div class="col-md-4">
-            <div class="card custom-card">
-                <div class="card-body">
-                    <h5 class="card-title custom-card-title">Tarifas Activas</h5>
-                    <p class="card-text custom-card-text">{{ tarifas_activas }}</p>
-                </div>
-            </div>
-        </div>
+    <hr>
+    <div class="row justify-content-md-center">
 
         <!-- Pagos Hoy -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Pagos Totales Realizados Hoy</h5>
                     <p class="card-text custom-card-text">{{ pagos_hoy }}</p>
@@ -30,8 +22,8 @@ Panel de control
         </div>
 
         <!-- Pagos del Mes -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Pagos Totales Realizados en el Mes</h5>
                     <p class="card-text custom-card-text">{{ pagos_mes }}</p>
@@ -40,8 +32,8 @@ Panel de control
         </div>
 
         <!-- Pagos del Año -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Pagos Totales Realizados en el Año</h5>
                     <p class="card-text custom-card-text">{{ pagos_anio }}</p>
@@ -50,8 +42,8 @@ Panel de control
         </div>
 
         <!-- Suma Pagos Hoy -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-orange">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Suma Total de Pagos de Hoy</h5>
                     <p class="card-text custom-card-text">{{ suma_pagos_hoy }}</p>
@@ -60,8 +52,8 @@ Panel de control
         </div>
 
         <!-- Suma Pagos del Mes -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-orange">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Suma Total de Pagos del Mes</h5>
                     <p class="card-text custom-card-text">{{ suma_pagos_mes }}</p>
@@ -70,8 +62,8 @@ Panel de control
         </div>
 
         <!-- Suma Pagos del Año -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-orange">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Suma Total de Pagos del Año</h5>
                     <p class="card-text custom-card-text">{{ suma_pagos_anio }}</p>
@@ -80,8 +72,8 @@ Panel de control
         </div>
 
         <!-- Recibos Hoy -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-green">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Recibos Totales de Hoy</h5>
                     <p class="card-text custom-card-text">{{ recibos_hoy }}</p>
@@ -90,8 +82,8 @@ Panel de control
         </div>
 
         <!-- Recibos del Mes -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-green">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Recibos Totales del Mes</h5>
                     <p class="card-text custom-card-text">{{ recibos_mes }}</p>
@@ -100,8 +92,8 @@ Panel de control
         </div>
 
         <!-- Recibos del Año -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-green">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Recibos Totales del Año</h5>
                     <p class="card-text custom-card-text">{{ recibos_anio }}</p>
@@ -110,8 +102,8 @@ Panel de control
         </div>
 
         <!-- Contribuyentes Registrados Hoy -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-purple">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Contribuyentes Registrados Hoy</h5>
                     <p class="card-text custom-card-text">{{ contribuyentes_hoy }}</p>
@@ -120,8 +112,8 @@ Panel de control
         </div>
 
         <!-- Contribuyentes Registrados en el Mes -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-purple">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Contribuyentes Registrados en el Mes</h5>
                     <p class="card-text custom-card-text">{{ contribuyentes_mes }}</p>
@@ -130,8 +122,8 @@ Panel de control
         </div>
 
         <!-- Total Contribuyentes Registrados -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-purple">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Total de Contribuyentes Registrados</h5>
                     <p class="card-text custom-card-text">{{ contribuyentes_total }}</p>
@@ -140,14 +132,29 @@ Panel de control
         </div>
 
         <!-- Total de Propiedades -->
-        <div class="col-md-4">
-            <div class="card custom-card">
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-red">
                 <div class="card-body">
+                    <h5 class="card-title custom-card-title"><i class="fa fa-building" aria-hidden="true"></i></h5>
                     <h5 class="card-title custom-card-title">Total de Propiedades</h5>
                     <p class="card-text custom-card-text">{{ total_propiedades }}</p>
                 </div>
             </div>
         </div>
+
+        <!-- Tarifas Activas -->
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-cyan">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title"><i class="fa fa-file-text" aria-hidden="true"></i></i></h5>
+                    <h5 class="card-title custom-card-title">Tarifas Activas</h5>
+                    <p class="card-text custom-card-text">{{ tarifas_activas }}</p>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <hr>
 </div>
 {% endblock %}

@@ -200,21 +200,47 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
     display: none;
 }
 
-.custom-card {
-    border: 2px solid #007BFF; /* Borde azul */
+.custom-card { /* Borde azul */
     box-shadow: 0 4px 8px 0 rgba(0, 123, 255, 0.2); /* Sombra azul */
     text-align: center; /* Texto centralizado */
     margin-bottom: 20px; /* Espaciado entre tarjetas */
+    font-size: 12px;
+}
+
+.card-border-blue {
+    border-bottom: 2px solid #007BFF;
+}
+
+.card-border-red {
+    border-bottom: 2px solid #f12652;
+}
+
+.card-border-cyan {
+    border-bottom: 2px solid rgb(26, 167, 195);
+}
+
+
+.card-border-orange {
+    border-bottom: 2px solid #f19226;
+}
+
+.card-border-green {
+    border-bottom: 2px solid #21aa6c;
+}
+
+.card-border-purple {
+    border-bottom: 2px solid #7300ff;
 }
 
 .custom-card-title {
-    font-size: 1.2em; /* Título simple */
+    font-size: 1.4em; /* Título simple */
     font-weight: bold; /* Negrita */
-    color: #007BFF; /* Color azul */
+    color: #3c6794; /* Color azul */
 }
 
 .custom-card-text {
     font-size: 1.5em; /* Tamaño de texto más grande */
     font-weight: bold; /* Negrita */
-    color: #333; /* Color de texto */
+    color: #485b6c; /* Color de texto */
+    font-size: 28px;
 }

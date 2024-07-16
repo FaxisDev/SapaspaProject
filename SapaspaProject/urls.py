@@ -27,6 +27,8 @@ from Servicios.views import TarifaListView
 from Web.View.principal_views import principalView
 from Web.View.portal_views import portalView
 from Web.View.endpoints_page import endPointsView
+from Web.View.Reportes.reporte_pagos_view import reportePagoslView
+from Web.View.Reportes.reporte_contribuyentes_view import reporteContribuyentesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +38,8 @@ urlpatterns = [
     path('', portalView, name='principal-page'),
     path('principal/', principalView, name='principal-page'),
     path('endpoints/', endPointsView, name='endpoints-page'),
+    path('reporte/pagos/', reportePagoslView, name='reporte-pagos-page'),
+    path('reporte/contribuyentes/', reporteContribuyentesView, name='reporte-contribuyentes-page'),
     #Seccion de API
     path('api/propiedades/', PropiedadListCreateView.as_view(), name='propiedad-list-create'),
     path('api/propiedades/<int:pk>/', PropiedadDetailView.as_view(), name='propiedad-detail'),

@@ -59,6 +59,7 @@ def principalView(request):
         'contribuyentes_mes': contribuyentes_mes,
         'contribuyentes_total': contribuyentes_total,
         'total_propiedades': total_propiedades,
+        'fecha': hoy
     }
 
     return render(request, 'principal.html', context)

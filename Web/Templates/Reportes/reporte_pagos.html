@@ -1,0 +1,86 @@
+{% extends 'Layouts/layout.html' %}
+
+{% block title %}
+Reporte de pagos
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Reporte de pagos</h1>
+    <hr>
+    <div class="row justify-content-md-center">
+        <div class="col-12">
+            <div class="card custom-card card-border-blue mb-2">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">Utilice el siguiente formulario para filtrar y exportar los registros de pagos. Complete los campos según sea necesario y haga clic en "Exportar" para descargar los resultados en formato CSV.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <form method="get" class="form-inline">
+                <div class="card custom-card card-border-blue mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="propiedad_id" class="card-text custom-card-text">Propiedad ID</label>
+                            {{ form.propiedad_id }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-green mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="recibo_id" class="card-text custom-card-text">Recibo ID</label>
+                            {{ form.recibo_id }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-red mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="tarifa" class="card-text custom-card-text">Tarifa</label>
+                            {{ form.tarifa }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-orange mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="tipo_pago" class="card-text custom-card-text">Tipo Pago</label>
+                            {{ form.tipo_pago }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-cyan mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="servicio" class="card-text custom-card-text">Servicio</label>
+                            {{ form.servicio }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-purple mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fecha_inicio" class="card-text custom-card-text">Fecha Inicio</label>
+                            {{ form.fecha_inicio }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card card-border-blue mb-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fecha_fin" class="card-text custom-card-text">Fecha Fin</label>
+                            {{ form.fecha_fin }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <button type="submit" name="export" class="btn btn-secondary">Exportar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
