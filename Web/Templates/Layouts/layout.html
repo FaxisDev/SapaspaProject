@@ -40,13 +40,18 @@
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="{% url 'reporte-pagos-page' %}" class="sidebar-link">Reporte de pagos</a>
+                                <a href="{% url 'reporte-pagos-page' %}" class="sidebar-link ms-3"><i class="fa-solid fa-file-lines pe-2"></i>Reporte de pagos</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="{% url 'reporte-contribuyentes-page' %}" class="sidebar-link">Reporte de
+                                <a href="{% url 'reporte-contribuyentes-page' %}" class="sidebar-link ms-3"><i class="fa-solid fa-file-lines pe-2"></i>Reporte de
                                     contribuyente</a>
                             </li>
+
                         </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'endpoints-page' %}" class="sidebar-link">
+                            <i class="fa-solid fa-link pe-2"></i>Endpoints</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="{% url 'admin:index' %}" class="sidebar-link">
@@ -54,10 +59,7 @@
                     </li>
 
                     <li class="sidebar-header">Links</li>
-                    <li class="sidebar-item">
-                        <a href="{% url 'endpoints-page' %}" class="sidebar-link">
-                            <i class="fa-solid fa-link pe-2"></i>Endpoints</a>
-                    </li>
+                    
                     <li class="sidebar-item">
                         <a href="http://localhost:3000" target="_blank" class="sidebar-link">
                             <i class="fa-solid fa-eye pe-2"></i>Portal de agua</a>
