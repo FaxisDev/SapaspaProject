@@ -5,38 +5,48 @@
 Lista de Endpoints
 {% endblock %}
 
+{% block breadcrumb %}
+Lista de Endpoints
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
-    <div class="card">
-        <div class="card-header">Lista de Endpoints</div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">Urls del sitio</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">URL</th>
+                            <th scope="col">Argumentos</th>
+                            <th scope="col">Métodos</th>
+                            <th scope="col">Cadena de Búsqueda</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pattern in url_patterns %}
+                        <tr>
+                            <td>{{ pattern.name }}</td>
+                            <td>{{ pattern.url }}</td>
+                            <td>{{ pattern.default_args }}</td>
+                            <td>{{ pattern.methods }}</td>
+                            <td>{{ pattern.lookup_str }}</td>
+                            <td>
+                                <div class="d-grid gap-2">
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">URL</th>
-                        <th scope="col">Argumentos</th>
-                        <th scope="col">Metodos</th>
-                        <th scope="col">Cadena de Búsqueda</th>
-                        <th scope="col">Acción</th> <!-- Nueva columna para el botón Ver -->
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for pattern in url_patterns %}
-                    <tr>
-                        <td scope="row">{{ pattern.name }}</td>
-                        <td>{{ pattern.url }}</td>
-                        <td>{{ pattern.default_args }}</td>
-                        <td>{{ pattern.methods }}</td>
-                        <td>{{ pattern.lookup_str }}</td>
-                        <td>
-                            <a href="{{ pattern.url }}" class="btn btn-primary">Ver</a>
-                        </td> <!-- Botón Ver que enlaza a la URL -->
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                                    <a href="{{ pattern.url }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -1,17 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.utils import timezone
 from django.db.models import Sum, Count
-from datetime import timedelta
+from django.db.models.functions import TruncMonth
+from chartjs.views.lines import BaseLineChartView
 
 from Tarifas.models import Tarifa
 from Recibos.models import Pago, Recibo
-from Tarifas.models import Tarifa
 from Contribuyentes.models import Contribuyente
-from Propiedades.models import  Propiedad
-# Create your views here.
-@login_required # type: ignore
+from Propiedades.models import Propiedad
+
+@login_required  # type: ignore
 def principalView(request):
     # Obtener la fecha actual
     hoy = timezone.now().date()
@@ -44,6 +43,10 @@ def principalView(request):
     # Total de propiedades
     total_propiedades = Propiedad.objects.all().count()
 
+    # Datos para las gráficas
+    pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('total')).order_by('month')
+    recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('id')).order_by('month')
+
     context = {
         'tarifas_activas': tarifas_activas,
         'pagos_hoy': pagos_hoy,
@@ -59,7 +62,44 @@ def principalView(request):
         'contribuyentes_mes': contribuyentes_mes,
         'contribuyentes_total': contribuyentes_total,
         'total_propiedades': total_propiedades,
-        'fecha': hoy
+        'fecha': hoy,
+        'pagos_por_mes': list(pagos_por_mes),
+        'recibos_por_mes': list(recibos_por_mes),
     }
 
     return render(request, 'principal.html', context)
+
+
+class PagosPorMesChartView(BaseLineChartView):
+    def get_labels(self):
+        # Genera las etiquetas de los meses
+        hoy = timezone.now().date()
+        pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('total')).order_by('month')
+        return [item['month'].strftime('%b') for item in pagos_por_mes]
+
+    def get_providers(self):
+        # Proveedores de datos del gráfico
+        return ["Pagos"]
+
+    def get_data(self):
+        # Datos para el gráfico
+        hoy = timezone.now().date()
+        pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('total')).order_by('month')
+        return [[item['total'] for item in pagos_por_mes]]
+
+class RecibosPorMesChartView(BaseLineChartView):
+    def get_labels(self):
+        # Genera las etiquetas de los meses
+        hoy = timezone.now().date()
+        recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Count('id')).order_by('month')
+        return [item['month'].strftime('%b') for item in recibos_por_mes]
+
+    def get_providers(self):
+        # Proveedores de datos del gráfico
+        return ["Recibos"]
+
+    def get_data(self):
+        # Datos para el gráfico
+        hoy = timezone.now().date()
+        recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Count('id')).order_by('month')
+        return [[item['total'] for item in recibos_por_mes]]

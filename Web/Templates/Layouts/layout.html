@@ -13,6 +13,8 @@
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script src="{% static 'js/excanvas.js' %}"></script>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -29,9 +31,7 @@
                     <li class="sidebar-header">Panel de control</li>
                     <li class="sidebar-item">
                         <a href="{% url 'principal-page' %}" class="sidebar-link">
-                            <i class="fa-solid fa-house pe-2"></i> Principal
-                            
-                        </a>
+                            <i class="fa-solid fa-house pe-2"></i>Principal</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
@@ -43,29 +43,24 @@
                                 <a href="{% url 'reporte-pagos-page' %}" class="sidebar-link">Reporte de pagos</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="{% url 'reporte-contribuyentes-page' %}" class="sidebar-link">Reporte de contribuyente</a>
+                                <a href="{% url 'reporte-contribuyentes-page' %}" class="sidebar-link">Reporte de
+                                    contribuyente</a>
                             </li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
                         <a href="{% url 'admin:index' %}" class="sidebar-link">
-                            <i class="fa-solid fa-key  pe-2"></i>
-                            Administración
-                        </a>
+                            <i class="fa-solid fa-key  pe-2"></i>Administración</a>
                     </li>
 
                     <li class="sidebar-header">Links</li>
                     <li class="sidebar-item">
                         <a href="{% url 'endpoints-page' %}" class="sidebar-link">
-                            <i class="fa-solid fa-link pe-2"></i>
-                            Endpoints
-                        </a>
+                            <i class="fa-solid fa-link pe-2"></i>Endpoints</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="http://localhost:3000" target="_blank" class="sidebar-link">
-                            <i class="fa-solid fa-eye pe-2"></i>
-                            Portal de agua
-                        </a>
+                            <i class="fa-solid fa-eye pe-2"></i>Portal de agua</a>
                     </li>
                 </ul>
             </div>
@@ -79,8 +74,7 @@
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon p-2">
                                 <span class="navbar-text mx-2">{{ user.username }}</span>
 
-                                <img src="https://vivolabs.es/wp-content/uploads/2022/03/perfil-mujer-vivo.png"
-                                    class="avatar img-fluid rounded-circle" alt="" />
+                                <i class="fa-solid fa-user p-2 text-dark img-fluid rounded-circle"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a href="#" class="dropdown-item">Perfil</a>
@@ -91,28 +85,34 @@
                     </ul>
                 </div>
             </nav>
+
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="bg-light">
+                <div class="container-fluid">
+
+                    <ol class="breadcrumb mb-0 p-2 mx-2">
+                        <li class="breadcrumb-item">
+
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">{% block breadcrumb %}{% endblock %}</li>
+                    </ol>
+                </div>
+            </nav>
+
             <main class="content px-3 py-2">
                 {% block content %}
                 <!-- Área para el contenido específico de cada página -->
                 {% endblock %}
             </main>
 
-            <footer class="footer">
-                <div class="container-fluid">
+            <footer class="footer bg-light">
+                <div class="container-fluid mx-3 p-3">
                     <div class="row text-muted">
-                        <div class="col-6 text-start">
+                        <div class="col-12">
                             <p class="mb-0">
-                                <a href="#" class="text-muted"><strong>Sapaspa - Panel de control</strong></a>
+                                <a href="#" class="text-muted">&copy; <strong>Sapaspa - Panel de control</strong></a>
                             </p>
                         </div>
-                        <div class="col-6 text-end">
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <a href="#" class="text-muted">Contact</a>
-                                </li>
-                             
-                            </ul>
-                        </div>
+                        
                     </div>
                 </div>
             </footer>
@@ -120,6 +120,7 @@
     </div>
     {% bootstrap_javascript %}
     <script src="{% static 'js/script.js' %}"></script>
+    {% block js-page %}{% endblock %}
 </body>
 
 </html>

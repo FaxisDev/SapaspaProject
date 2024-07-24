@@ -47,6 +47,10 @@ pip3 install -r requirements.txt
 # Desactivar el entorno virtual
 deactivate
 
+#Generar el archivo requirements.txt:
+##Una vez que el entorno virtual esté activado, puedes utilizar el siguiente comando para guardar la lista de paquetes instalados en requirements.txt:
+
+``` pip3 freeze > requirements.txt  ```
 
 ## Para Generar el archivo .dot para modelo relacional actual es
  ``` python3 manage.py graph_models -a -o my_models.dot  ```

@@ -1,14 +1,17 @@
 <!-- portal.html -->
 {% extends 'Layouts/layout.html' %}
-
+{% load static %}
 {% block title %}
 Panel de control
 {% endblock %}
 
+{% block breadcrumb %}
+Panel de Control
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
-    <h1>Panel de Control</h1>
-    <hr>
+
     <div class="row justify-content-md-center">
 
         <!-- Pagos Hoy -->
@@ -155,6 +158,72 @@ Panel de control
 
     </div>
 
-    <hr>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <!-- Aqui grafica de suma totales de pagos de todos los recibos por mes de todo el año actual -->
+            <div class="card custom-card card-border-red">
+                <div class="card-body">
+
+                    <canvas id="pagosPorMesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <!-- Aqui grafica de suma totales de recibos  por mes de todo el año actual -->
+            <div class="card custom-card card-border-cyan">
+                <div class="card-body">
+                    <canvas id="recibosPorMesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block js-page %}
+
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch("{% url 'pagos_por_mes_chart' %}")
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.getElementById('pagosPorMesChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: data.datasets
+                    },
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: true,
+                            text: 'Pagos Mensuales'
+                        },
+                    }
+                });
+            });
+
+        fetch("{% url 'recibos_por_mes_chart' %}")
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.getElementById('recibosPorMesChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: data.datasets
+                    },
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: true,
+                            text: 'Recibos Mensuales'
+                        },
+                    }
+
+                });
+            });
+    });
+
+</script>
 {% endblock %}

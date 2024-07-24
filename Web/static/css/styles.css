@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
 
 *,
 ::after,
@@ -8,7 +8,7 @@
 
 body {
     background-color: #e9ecef;
-    font-family: "Poppins", sans-serif;
+    font-family: "Sofia Sans Extra Condensed", sans-serif;
     font-size: 0.875rem;
     opacity: 1;
     overflow-y: scroll;
@@ -18,7 +18,6 @@ body {
 a {
     cursor: pointer;
     text-decoration: none;
-    font-family: "Poppins", sans-serif;
 }
 
 li {
@@ -26,7 +25,6 @@ li {
 }
 
 h4 {
-    font-family: "Poppins", sans-serif;
     font-size: 1.275rem;
     color: var(--bs-emphasis-color);
 }
@@ -84,11 +82,11 @@ h4 {
 }
 
 a.sidebar-link {
-    padding: 0.625rem 1.625rem;
+    padding: 0.625rem 1.825rem;
     color: #e9ecef;
     position: relative;
     display: block;
-    font-size: 0.875rem;
+    font-size: 16px;
 }
 
 .sidebar-link[data-bs-toggle="collapse"]::after {
@@ -107,11 +105,6 @@ a.sidebar-link {
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all 0.2s ease-out;
-}
-
-.avatar {
-    height: 40px;
-    width: 40px;
 }
 
 .navbar-expand .navbar-nav {
@@ -200,10 +193,14 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
     display: none;
 }
 
-.custom-card { /* Borde azul */
-    box-shadow: 0 4px 8px 0 rgba(0, 123, 255, 0.2); /* Sombra azul */
-    text-align: center; /* Texto centralizado */
-    margin-bottom: 20px; /* Espaciado entre tarjetas */
+.custom-card {
+    /* Borde azul */
+    box-shadow: 0 4px 8px 0 rgba(0, 123, 255, 0.2);
+    /* Sombra azul */
+    text-align: center;
+    /* Texto centralizado */
+    margin-bottom: 20px;
+    /* Espaciado entre tarjetas */
     font-size: 12px;
 }
 
@@ -233,14 +230,16 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
 }
 
 .custom-card-title {
-    font-size: 1.4em; /* Título simple */
-    font-weight: bold; /* Negrita */
-    color: #3c6794; /* Color azul */
+    font-size: 17px;
+    font-weight: bold;
+    color: #454b50;
 }
 
 .custom-card-text {
-    font-size: 1.5em; /* Tamaño de texto más grande */
-    font-weight: bold; /* Negrita */
-    color: #485b6c; /* Color de texto */
-    font-size: 28px;
+    /* Tamaño de texto más grande */
+    font-weight: bold;
+    /* Negrita */
+    color: #485b6c;
+    /* Color de texto */
+    font-size: 32px;
 }
