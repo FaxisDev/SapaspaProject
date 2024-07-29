@@ -18,7 +18,7 @@ class Contribuyente(models.Model):
     id_user = models.ForeignKey(User, on_delete=models.PROTECT,default=None)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.id} - {self.nombre} {self.apellido_paterno} {self.apellido_materno} [{self.folio_unico}]"
 
     class Meta:
         verbose_name = 'Contribuyente'

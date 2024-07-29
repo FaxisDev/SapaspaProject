@@ -5,7 +5,6 @@ from rest_framework.response import Response  # type: ignore
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
 from .filters import ReciboFilter
-import json
 
 from .serializers import PagoSerializer, ReciboSerializer, TipoPagoSerializer
 
@@ -15,7 +14,7 @@ from Tarifas.models import Tarifa
 from .models import Pago, Recibo, TipoPago
 
 class ReciboListView(generics.ListAPIView):
-    queryset = Recibo.objects.all()
+    queryset = Recibo.objects.all().order_by("-id")
     serializer_class = ReciboSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ReciboFilter
