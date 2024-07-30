@@ -31,8 +31,11 @@ from Web.View.Reportes.reporte_pagos_view import reportePagoslView
 from Web.View.Reportes.reporte_contribuyentes_view import reporteContribuyentesView
 from Web.View.Pdfs.recibo_pdf_view import reciboPDFView
 
+from django.conf.urls import include
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('cerrar-sesion/', auth_views.LogoutView.as_view(), name='logout'),
 
     #Seccion Web Administrable
