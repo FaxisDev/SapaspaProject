@@ -1,5 +1,3 @@
-
-
 from .serializers import ServicioSerializer
 from .models import Servicio
 from rest_framework import generics

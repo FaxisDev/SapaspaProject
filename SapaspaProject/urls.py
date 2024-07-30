@@ -23,6 +23,7 @@ from Contribuyentes.views import ContribuyenteListCreateView, ContribuyenteDetai
 from Tarifas.views import TarifaListCreateView
 from Recibos.views import ReciboListView, ReciboDetailView, PagoListCreateView, PagoDetailView, TipoPagoListView, ObtenerPagosListView, GenerarReciboView
 from Servicios.views import TarifaListView
+from PreguntasFrecuentes.views import PreguntaFrecuenteListView
 
 from Web.View.principal_views import principalView, PagosPorMesChartView, RecibosPorMesChartView
 from Web.View.portal_views import portalView
@@ -65,5 +66,5 @@ urlpatterns = [
     path('api/obtener-pago', ObtenerPagosListView.as_view(), name='Obtener lista pagos pendientes'),
     path('api/generar-recibo',GenerarReciboView.as_view(), name='Generar recibo con pagos'),
     path('api/servicios/', TarifaListView.as_view(), name='propiedad-list'),
-    
+    path('api/preguntas-frecuentes/', PreguntaFrecuenteListView.as_view(), name='Lista de Preguntas Frecuentes'),   
 ]
