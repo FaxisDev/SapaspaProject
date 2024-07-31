@@ -2,7 +2,6 @@ from rest_framework import generics  # Importa el módulo generics de Django RES
 from .serializers import ContribuyenteSerializer  # Importa el serializer ContribuyenteSerializer desde el módulo de serializers local.
 from .models import Contribuyente  # Importa el modelo Contribuyente desde el módulo de modelos local.
 from .filters import ContribuyenteFilter  # Importa el conjunto de filtros ContribuyenteFilter desde el módulo de filtros local.
-from rest_framework.response import Response  # Importa Response para manejar respuestas HTTP.
 from django_filters.rest_framework import DjangoFilterBackend  # Importa DjangoFilterBackend para agregar funcionalidad de filtrado.
 
 # Define una vista para listar y crear instancias del modelo Contribuyente.
