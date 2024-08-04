@@ -8,6 +8,7 @@ from .models import Propiedad, TipoPropiedad
 class PropiedadAdmin(admin.ModelAdmin):
     search_fields = ["contribuyente"]  # Busqueda de filtro
     list_display = [
+        "id",
         "contribuyente",
         "tipo_propiedad",
         "numero_interior",

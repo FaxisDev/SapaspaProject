@@ -13,6 +13,7 @@ from Servicios.models import Servicio
 from Tarifas.models import Tarifa
 from .models import Pago, Recibo, TipoPago
 
+
 class ReciboListView(generics.ListAPIView):
     queryset = Recibo.objects.all().order_by("-id")
     serializer_class = ReciboSerializer
@@ -70,7 +71,7 @@ class ObtenerPagosListView(APIView):
             return Response(
                 {
                     "title": "Precio No Disponible",
-                    "message": "Actualmente no hay un precio disponible. Por favor, inténtalo de nuevo más tarde."
+                    "message": "Actualmente no hay un precio disponible. Por favor, inténtalo de nuevo más tarde.",
                 },
                 status=status.HTTP_404_NOT_FOUND,
             )
@@ -120,14 +121,14 @@ class ObtenerPagosListView(APIView):
                                     "descuento": 0,
                                 }
                             )
-                    
+
                     if not lista_pagos:
                         return Response(
                             {
                                 "title": "¡Estas al dia!",
                                 "message": "No hay pagos pendientes en este momento.",
                             },
-                            status=status.HTTP_200_OK
+                            status=status.HTTP_200_OK,
                         )
                 return Response(lista_pagos, status=status.HTTP_200_OK)
 
@@ -135,7 +136,13 @@ class ObtenerPagosListView(APIView):
                 # Si no se encuentra ningún recibo, usamos la fecha de creación de la propiedad
                 ultimo_pago = Propiedad.objects.filter(pk=id_propiedad).first()
                 if ultimo_pago is None:
-                    return Response([], status=status.HTTP_404_NOT_FOUND)
+                    return Response(
+                        {
+                            "title": "Propiedad no encontrada",
+                            "message": f"No se encontro este ID de propiedad: {id_propiedad}",
+                        },
+                        status=status.HTTP_404_NOT_FOUND,
+                    )
 
                 # Obtener la fecha del último pago
                 ultima_fecha_pago = ultimo_pago.fecha_creacion.date()
@@ -164,6 +171,14 @@ class ObtenerPagosListView(APIView):
                                 "descuento": 0,
                             }
                         )
+                    if len(lista_pagos) == 0:
+                        return Response(
+                            {
+                                "title": f"¡Estas al dia!",
+                                "message": "No hay pagos pendientes en este momento.",
+                            },
+                            status=status.HTTP_200_OK,
+                        )
 
                 return Response(lista_pagos, status=status.HTTP_200_OK)
 
@@ -172,7 +187,7 @@ class ObtenerPagosListView(APIView):
                 "title": "¡Estas al dia!",
                 "message": "No hay pagos pendientes en este momento.",
             },
-            status=status.HTTP_200_OK
+            status=status.HTTP_200_OK,
         )
 
 
@@ -211,7 +226,7 @@ class GenerarReciboView(APIView):
                 {"message": "Tipo de pago no encontrado."},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
         # Obtener la instancia de Propiedad correspondiente
         try:
             propiedad = Propiedad.objects.get(id=id_propiedad)
@@ -222,7 +237,9 @@ class GenerarReciboView(APIView):
             )
 
         # Crear Recibo
-        recibo = Recibo.objects.create(propiedad=propiedad, tipo_pago=tipo_pago, tarifa=tarifa)
+        recibo = Recibo.objects.create(
+            propiedad=propiedad, tipo_pago=tipo_pago, tarifa=tarifa
+        )
 
         # Crear Pagos asociados
         for pago_data in pagos:
@@ -241,10 +258,14 @@ class GenerarReciboView(APIView):
                 mes_pago=pago_data.get("mes_pago"),
                 sub_total=pago_data.get("sub_total"),
                 total=pago_data.get("total"),
-                descuento=pago_data.get("descuento", 0)
+                descuento=pago_data.get("descuento", 0),
             )
 
         return Response(
-            {"id_recibo": recibo.id, "message": "El recibo ha sido generado y ahora puedes descargarlo o visualizarlo en tu perfil, en la pestaña de recibos."},
+            {
+                "id_recibo": recibo.id,
+                "id_contribuyente": recibo.propiedad.contribuyente.id,
+                "message": "El recibo ha sido generado y ahora puedes descargarlo o visualizarlo en tu perfil en la pestaña de recibos.",
+            },
             status=status.HTTP_201_CREATED,
         )
