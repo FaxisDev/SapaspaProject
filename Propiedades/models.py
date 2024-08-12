@@ -30,15 +30,21 @@ class Propiedad(models.Model):
     referencias = models.TextField(null=True, blank=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
-    tipo_propiedad = models.ForeignKey(TipoPropiedad, on_delete=models.PROTECT, default=None)
-    contribuyente = models.ForeignKey(Contribuyente, on_delete=models.PROTECT, default=None)
+    tipo_propiedad = models.ForeignKey(
+        TipoPropiedad, on_delete=models.PROTECT, default=None
+    )
+    contribuyente = models.ForeignKey(
+        Contribuyente, on_delete=models.PROTECT, default=None
+    )
 
     @property
     def info_pago(self):
         from Recibos.models import Pago  # Importación diferida
 
         # Obtiene el último pago asociado a la propiedad a través de los recibos
-        ultimo_pago = Pago.objects.filter(recibo__propiedad=self).order_by("-mes_pago").first()
+        ultimo_pago = (
+            Pago.objects.filter(recibo__propiedad=self).order_by("-mes_pago").first()
+        )
 
         if ultimo_pago:
             fecha_ultimo_pago = ultimo_pago.mes_pago
