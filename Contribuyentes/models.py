@@ -11,7 +11,7 @@ class Contribuyente(models.Model):
     apellido_materno = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, default=None)
     correo_electronico = models.EmailField(default=None, unique=True)
-    estatus = models.CharField(max_length=20, choices=[('activo', 'Activo'), ('inactivo', 'Inactivo')], default='activo'),
+    estatus = models.CharField(max_length=20, choices=[('activo', 'Activo'), ('inactivo', 'Inactivo')], default='activo')
      # Otros campos del modelo...
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
