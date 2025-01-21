@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -25,6 +26,9 @@
     <div class="section">
         
         <div class="container">
+
+            <img src="{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}" alt="Logo" width="156" />
+ 
 
                 <table class="table table-receipt data-table">
                     <tr>

@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from Recibos.models import Pago, Recibo
 from django.db.models import Sum
+from django.conf import settings
+import os
 
 
 @api_view(["GET"])
@@ -36,7 +38,9 @@ def reciboPDFView(request, recibo_id, contribuyente_id):
         "pagos": pagos,
         "total_pagado": total_pagado,
         "total_descuento": total_descuento,
+        "request": request,  # Se pasa el request al contexto
     }
+
     # Renderizar el template HTML a una cadena
     template = get_template("Pdfs/recibo.html")
     html = template.render(context)
@@ -44,8 +48,10 @@ def reciboPDFView(request, recibo_id, contribuyente_id):
     # Crear un objeto BytesIO para almacenar el PDF
     result = BytesIO()
 
-    # Crear el PDF utilizando xhtml2pdf
-    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result)
+    # Crear el PDF utilizando xhtml2pdf y el callback para rutas
+    pdf = pisa.pisaDocument(
+        BytesIO(html.encode("utf-8")), result, link_callback=link_callback
+    )
 
     if not pdf.err:
         response = HttpResponse(result.getvalue(), content_type="application/pdf")
@@ -55,3 +61,18 @@ def reciboPDFView(request, recibo_id, contribuyente_id):
         return Response(
             {"message": "Error al generar el PDF"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+def link_callback(uri, rel):
+    """
+    Convierte rutas relativas de imágenes y archivos estáticos a rutas absolutas.
+    """
+    if uri.startswith(settings.STATIC_URL):
+        path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    elif uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    else:
+        return uri  # Devolver la URI original si no coincide con STATIC o MEDIA
+    if not os.path.isfile(path):
+        raise Exception(f"No se encontró el archivo en la ruta: {path}")
+    return path
