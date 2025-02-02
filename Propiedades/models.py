@@ -63,7 +63,7 @@ class Propiedad(models.Model):
 
         # Determina el estatus según la diferencia en meses
         if diferencia_meses > 6:  # Más de 6 meses
-            estatus = "Atrasado"
+            estatus = "Adeudo"
         elif diferencia_meses > 1:  # Entre 1 y 6 meses
             estatus = "Pendiente"
         else:  # 1 mes o menos

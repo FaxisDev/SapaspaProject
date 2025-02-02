@@ -60,10 +60,10 @@ def reporteContribuyentesView(request):
             response['Content-Disposition'] = 'attachment; filename="reporte_contribuyentes.csv"'
 
             writer = csv.writer(response)
-            writer.writerow(['ID', 'ID Propiedad', 'Folio Único', 'CURP', 'Nombre', 'Apellido Paterno', 'Apellido Materno',
-                             'Teléfono', 'Correo Electrónico', 'Estatus', 'Número Interior', 'Número Exterior',
+            writer.writerow(['ID', 'ID Propiedad', 'Folio Unico', 'CURP', 'Nombre', 'Apellido Paterno', 'Apellido Materno',
+                             'Teléfono', 'Correo Electronico', 'Estatus', 'Número Interior', 'Número Exterior',
                              'Calle', 'Entre Calles', 'Colonia', 'Ciudad', 'Estado', 'Código Postal', 'Referencias',
-                             'Tipo de Propiedad', 'Último Estatus de Pago', 'Última Fecha de Pago'])
+                             'Tipo de Propiedad', 'Último Estatus de Pago', 'Ultima Fecha de Pago'])
 
             for propiedad in propiedades:
                 writer.writerow([
