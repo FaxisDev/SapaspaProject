@@ -1,0 +1,222 @@
+<!-- portal.html -->
+{% extends 'Layouts/layout.html' %}
+{% load static %}
+{% block title %}
+Panel de control
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+    Panel de control
+</li>
+<li class="breadcrumb-item">
+    Estadísticas
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+    Gráfica de deudores
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <h3 class="alert-heading"><i class="fa-solid fa-file-lines pe-2"></i> ¡Importante!</h3>
+                <p>Esta sección muestra una gráfica con el total de propiedades de los contribuyentes según su estado de
+                    pago,
+                    tal como se visualiza en el <a href="{% url 'reporte-contribuyentes-page' %}"
+                        class="alert-link text-decoration-underline">reporte de contribuyentes</a>:</p>
+                <ul class="mb-2">
+                    <li><i class="fa-solid fa-arrow-right pe-2"></i><strong>Deudores:</strong> Propiedades con más de 6
+                        meses sin pagar.</li>
+                    <li><i class="fa-solid fa-arrow-right pe-2"></i><strong>Pendiente de pago:</strong> Propiedades con
+                        entre 1 y 5 meses de retraso.</li>
+                    <li><i class="fa-solid fa-arrow-right pe-2"></i><strong>Al día:</strong> Propiedades con pagos
+                        realizados en el último mes.</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="row justify-content-md-center">
+
+        <!-- Propiedades con Adeudo -->
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">Propiedades con Adeudo</h5>
+                    <p class="card-text custom-card-text">{{ total_adeudos }}
+
+
+                    </p>
+                    <h4>
+                        <span class="badge text-bg-primary p-2">{{ porcentaje_adeudos }}%</span>
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Propiedades con Pagos Pendientes -->
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">Propiedades con Pagos Pendientes</h5>
+                    <p class="card-text custom-card-text">{{ total_pendientes }}
+
+                    </p>
+                    <h4>
+                        <span class="badge text-bg-primary p-2">{{ porcentaje_pendientes }}%</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Propiedades al Día -->
+        <div class="col-12 col-md-4 col-sm-6">
+            <div class="card custom-card card-border-blue">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">Propiedades al Día</h5>
+                    <p class="card-text custom-card-text">{{ total_al_dia }}
+
+                    </p>
+                    <h4>
+                        <span class="badge text-bg-primary p-2">{{ porcentaje_al_dia }}%</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <!-- Aqui grafica de suma totales de pagos de todos los recibos por mes de todo el año actual -->
+            <div class="card custom-card card-border-red">
+                <div class="card-body">
+
+                    <canvas id="estatusTotalPropiedadesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <!-- Aqui grafica de suma totales de recibos  por mes de todo el año actual -->
+            <div class="card custom-card card-border-cyan">
+                <div class="card-body">
+                    <canvas id="estatusTotalPropiedadesChartCircle"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js-page %}
+
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch("{% url 'total_estatus_ropiedades_chart' %}")
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.getElementById('estatusTotalPropiedadesChart'), {
+                    type: 'bar',
+
+                    data: {
+                        labels: ['Adeudo', 'Pendiente', 'Al Día'],  // Etiquetas para las barras
+                        datasets: [{
+
+                            label: 'Estatus de Propiedades',  // Unificación de la etiqueta para todos los estados
+                            data: [data.datasets[0].data[0], data.datasets[0].data[1], data.datasets[0].data[2]],  // Datos correspondientes a los tres estados
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',  // Rojo (Adeudos)
+                                'rgba(255, 206, 86, 0.5)',  // Amarillo (Pendientes)
+                                'rgba(75, 192, 192, 0.5)'   // Verde (Al Día)
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',  // Rojo (Bordes)
+                                'rgba(255, 206, 86, 1)',  // Amarillo (Bordes)
+                                'rgba(75, 192, 192, 1)'   // Verde (Bordes)
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+
+                        responsive: true,  // Hace el gráfico responsivo
+                        title: {
+                            display: true,  // Muestra el título
+                            text: 'Estatus Total de Propiedades'  // Título del gráfico
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,  // Comienza la escala Y desde 0
+                                ticks: {
+                                    stepSize: 1  // Ajusta el paso de los ticks para una mejor visualización
+                                }
+
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',  // Coloca la leyenda en la parte superior
+                                labels: {
+                                    usePointStyle: true  // Hace que los puntos de la leyenda sean estilizados como círculos
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+
+                new Chart(document.getElementById('estatusTotalPropiedadesChartCircle'), {
+                    type: 'doughnut',  // Tipo de gráfico: dona
+                    data: {
+                        labels: ['Adeudo', 'Pendiente', 'Al Día'],  // Etiquetas para cada segmento
+                        datasets: [{
+                            data: [data.datasets[0].data[0], data.datasets[0].data[1], data.datasets[0].data[2]],  // Datos correspondientes a cada estado
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',  // Rojo para Adeudos
+                                'rgba(255, 206, 86, 0.5)',  // Amarillo para Pendientes
+                                'rgba(75, 192, 192, 0.5)'   // Verde para Al Día
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',  // Rojo para los bordes
+                                'rgba(255, 206, 86, 1)',  // Amarillo para los bordes
+                                'rgba(75, 192, 192, 1)'   // Verde para los bordes
+                            ],
+                            borderWidth: 1  // Grosor del borde
+                        }]
+                    },
+                    options: {
+                        responsive: true,  // Hace que el gráfico sea responsivo
+                        title: {
+                            display: true,  // Muestra el título
+                            text: 'Estatus Total de Propiedades'  // Título del gráfico
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top'  // Posición de la leyenda
+                            }
+                        }
+                    }
+                });
+
+
+
+            });
+    });
+
+
+
+</script>
+{% endblock %}

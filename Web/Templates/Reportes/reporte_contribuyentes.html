@@ -5,7 +5,15 @@ Reporte de Contribuyentes
 {% endblock %}
 
 {% block breadcrumb %}
-Reporte de Contribuyentes
+<li class="breadcrumb-item">
+    Panel de control
+</li>
+<li class="breadcrumb-item">
+    Reportes
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+    Reporte de Contribuyentes
+</li>
 {% endblock %}
 
 {% block content %}
@@ -61,7 +69,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-orange mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="apellido_paterno" class="card-text custom-card-text">Apellido Paterno</label>
+                                    <label for="apellido_paterno" class="card-text custom-card-text">Apellido
+                                        Paterno</label>
                                     {{ form.apellido_paterno }}
                                 </div>
                             </div>
@@ -71,7 +80,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-cyan mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="apellido_materno" class="card-text custom-card-text">Apellido Materno</label>
+                                    <label for="apellido_materno" class="card-text custom-card-text">Apellido
+                                        Materno</label>
                                     {{ form.apellido_materno }}
                                 </div>
                             </div>
@@ -91,7 +101,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-blue mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="correo_electronico" class="card-text custom-card-text">Correo Electrónico</label>
+                                    <label for="correo_electronico" class="card-text custom-card-text">Correo
+                                        Electrónico</label>
                                     {{ form.correo_electronico }}
                                 </div>
                             </div>
@@ -101,7 +112,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-red mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="tipo_propiedad" class="card-text custom-card-text">Tipo de Propiedad</label>
+                                    <label for="tipo_propiedad" class="card-text custom-card-text">Tipo de
+                                        Propiedad</label>
                                     {{ form.tipo_propiedad }}
                                 </div>
                             </div>
@@ -111,7 +123,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-orange mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="numero_interior" class="card-text custom-card-text">Número Interior</label>
+                                    <label for="numero_interior" class="card-text custom-card-text">Número
+                                        Interior</label>
                                     {{ form.numero_interior }}
                                 </div>
                             </div>
@@ -121,7 +134,8 @@ Reporte de Contribuyentes
                         <div class="card custom-card card-border-cyan mb-2">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="numero_exterior" class="card-text custom-card-text">Número Exterior</label>
+                                    <label for="numero_exterior" class="card-text custom-card-text">Número
+                                        Exterior</label>
                                     {{ form.numero_exterior }}
                                 </div>
                             </div>
@@ -150,7 +164,7 @@ Reporte de Contribuyentes
                 </div>
                 <div class="form-group mb-2 text-center">
                     <button type="submit" name="export" class="btn btn-secondary"><i
-                        class="fa-solid fa-file-lines pe-2"></i> Exportar</button>
+                            class="fa-solid fa-file-lines pe-2"></i> Exportar</button>
                 </div>
             </form>
         </div>

@@ -5,8 +5,17 @@ Reporte de pagos
 {% endblock %}
 
 {% block breadcrumb %}
-Reporte de pagos
+<li class="breadcrumb-item">
+    Panel de control
+</li>
+<li class="breadcrumb-item">
+    Reportes
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+    Reporte de pagos
+</li>
 {% endblock %}
+
 
 {% block content %}
 <div class="container-fluid">
@@ -99,7 +108,7 @@ Reporte de pagos
                     </div>
                     <div class="form-group mb-2 text-center">
                         <button type="submit" name="export" class="btn btn-secondary"><i
-                            class="fa-solid fa-file-lines pe-2"></i> Exportar</button>
+                                class="fa-solid fa-file-lines pe-2"></i> Exportar</button>
                     </div>
                 </div>
             </form>

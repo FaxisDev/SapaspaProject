@@ -28,6 +28,7 @@ from PreguntasFrecuentes.views import PreguntaFrecuenteListView
 from Web.View.principal_views import principalView, PagosPorMesChartView, RecibosPorMesChartView
 from Web.View.portal_views import portalView
 from Web.View.endpoints_page import endPointsView
+from Web.View.Estadisticas.grafica_deudores_view import graficaDeudoresView, EstatusPropiedadesChartView
 from Web.View.Reportes.reporte_pagos_view import reportePagoslView
 from Web.View.Reportes.reporte_contribuyentes_view import reporteContribuyentesView
 from Web.View.Pdfs.recibo_pdf_view import reciboPDFView
@@ -43,13 +44,15 @@ urlpatterns = [
     path('', portalView, name='principal-page'),
     path('principal/', principalView, name='principal-page'),
     path('endpoints/', endPointsView, name='endpoints-page'),
-    path('reporte/pagos/', reportePagoslView, name='reporte-pagos-page'),
-    path('reporte/contribuyentes/', reporteContribuyentesView, name='reporte-contribuyentes-page'),
+    path('estadisticas/grafica-deudores', graficaDeudoresView, name='estadistica-deudores-page'),
+    path('reportes/pagos/', reportePagoslView, name='reporte-pagos-page'),
+    path('reportes/contribuyentes/', reporteContribuyentesView, name='reporte-contribuyentes-page'),
     #PDF
     path('pdf/recibo/<recibo_id>/<contribuyente_id>/', reciboPDFView, name='Recibo de agua PDF'),
     #Graficos
     path('chart/pagos-por-mes/', PagosPorMesChartView.as_view(), name='pagos_por_mes_chart'),
     path('chart/recibos-por-mes/', RecibosPorMesChartView.as_view(), name='recibos_por_mes_chart'),
+    path('chart/total-estatus-propiedades/', EstatusPropiedadesChartView.as_view(), name='total_estatus_ropiedades_chart'),
     #Seccion de API
     path('api/propiedades/', PropiedadListCreateView.as_view(), name='propiedad-list-create'),
     path('api/propiedades/<int:pk>/', PropiedadDetailView.as_view(), name='propiedad-detail'),
