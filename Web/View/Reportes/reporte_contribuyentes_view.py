@@ -31,6 +31,7 @@ def reporteContribuyentesView(request):
         estado = form.cleaned_data.get('estado')
         codigo_postal = form.cleaned_data.get('codigo_postal')
         referencias = form.cleaned_data.get('referencias')
+        estatus = form.cleaned_data.get('estatus')
 
         # Construye la consulta filtrando por los campos del formulario
         propiedades = Propiedad.objects.filter(
@@ -52,11 +53,16 @@ def reporteContribuyentesView(request):
             Q(codigo_postal__icontains=codigo_postal) if codigo_postal else Q(),
             Q(referencias__icontains=referencias) if referencias else Q(),
             Q(tipo_propiedad=tipo_propiedad) if tipo_propiedad else Q(),
+        
         )
+
+        # Filtrar en Python según el estatus calculado
+        if estatus:
+            propiedades = [prop for prop in propiedades if prop.info_pago["estatus"] == estatus]
 
         # Lógica para exportar a CSV si se ha enviado el formulario para exportar
         if 'export' in request.GET:
-            response = HttpResponse(content_type='text/csv')
+            response = HttpResponse(content_type='text/csv; charset=utf-8-sig')
             response['Content-Disposition'] = 'attachment; filename="reporte_contribuyentes.csv"'
 
             writer = csv.writer(response)

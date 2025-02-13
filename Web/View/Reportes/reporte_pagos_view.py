@@ -36,7 +36,7 @@ def reportePagoslView(request):
     return render(request, 'Reportes/reporte_pagos.html', context)
 
 def export_pagos(request, pagos):
-    response = HttpResponse(content_type='text/csv')
+    response = HttpResponse(content_type='text/csv; charset=utf-8-sig')
     response['Content-Disposition'] = 'attachment; filename="reporte_pagos.csv"'
 
     writer = csv.writer(response)

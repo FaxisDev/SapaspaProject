@@ -41,6 +41,13 @@ class PagoSearchForm(forms.Form):
 
 
 class ContribuyenteSearchForm(forms.Form):
+    ESTATUS_OPCIONES = [
+        ('', 'Seleccione un Estatus de pago'),  # Opción sin seleccionar
+        ('Adeudo', 'Adeudo'),
+        ('Pendiente', 'Pendiente'),
+        ('Al día', 'Al día'),
+    ]
+
     curp = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     folio_unico = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -60,3 +67,6 @@ class ContribuyenteSearchForm(forms.Form):
     estado = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     codigo_postal = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     referencias = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    estatus = forms.ChoiceField(choices=ESTATUS_OPCIONES, required=False,
+                                           widget=forms.Select(attrs={'class': 'form-control'}))
+    
