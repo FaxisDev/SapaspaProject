@@ -1,93 +1,138 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Recibo de Pago</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px;
-       
-             
-        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 15px;
+
         }
- 
-       
-            .fondo {
-                position: fixed;
-                top: 0px;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                /* background-size: 50%; */
-                /* background-repeat: no-repeat; */
-                background: url(http://127.0.0.1:8000/static/img/logo.svg) no-repeat center center fixed;
-                opacity: 0.2;
-                z-index: -1;
-            }
-        
-     
-        .header { text-align: center; margin-bottom: 20px; }
-        .section { margin-bottom: 20px; }
-        .section-title { font-weight: bold; margin-bottom: 10px; }
-        .section-content { margin-left: 20px; }
-        .table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .table th, .table td { border: 1px solid #000; padding: 4px; text-align: center; }
-        .table th { background-color: #475259; color: #fff; }
-        .address { font-style: italic; }
-        .container { width: 100%; }
-        .data-table { margin-top: 0; }
+
+        @page {
+            background: url('{{ request.scheme }}://{{ request.get_host }}/static/img/logo.png') no-repeat center center;
+            background-opacity: 0.1;
+            /* Fondo semi-transparente */
+            background-object-position: 250px 300px;
+            /* left bottom */
+            background-height: 240px;
+            background-width: 318px;
+
+            /* Ajusta el tamaño a un 30% */
+
+            /* Asegúrate de que la opacidad sea compatible */
+            margin: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            margin-left: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1px;
+            vertical-align: middle;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: center;
+            vertical-align: middle;
+          
+        }
+
+        .table th {
+            background-color: #475259;
+            color: #fff;
+            vertical-align: middle;
+        }
+
+        .address {
+            font-style: italic;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .data-table {
+            margin-top: 0;
+        }
     </style>
 </head>
+
 <body>
-    <div class="fondo"></div> <!-- Capa de fondo separada -->
+<!--     <img src="{{ STATIC_URL }}img/logo.svg" class="marca-agua" /> -->
+
     <div class="header">
         <h1>SAPASPA</h1>
-        <h1>Servicio de Agua Potable Y Alcarillado San Pablo Atlazalpan</h1>
+        <h3>Servicio de Agua Potable Y Alcarillado San Pablo Atlazalpan</h3>
     </div>
 
     <div class="section">
-        
+
         <div class="container">
 
-            
 
-                <table class="table table-receipt data-table">
-                    <tr style="background-color: #21b3cd;">
 
-                        <td>Fecha del Recibo</td>
-                        <td>ID de Recibo</td>
-                        <td>ID propiedad</th>
+            <table class="table table-receipt data-table">
+                <tr style="background-color: #6993c7;">
 
-                        </tr>  
-                        
-                    <tr>
-                        <td>{{recibo.fecha_creacion}}</td>
-                        <td>{{ recibo.id}}</td>
-                        <td>{{ recibo.propiedad.id}}</td>
+                    <td>Fecha del Recibo</td>
+                    <td>Folio Unico</td>
+          
 
-                    </tr>
-                </table>
-                        
+                </tr>
 
-      
+                <tr>
+                    <td>{{recibo.fecha_creacion}}</td>
+                    <td>{{ recibo.propiedad.contribuyente.folio_unico}}</td>
+                    
+
+                </tr>
+            </table>
+
+
+
             <div class="section-title">Datos del Contribuyente</div>
 
-                <table class="table table-contribuyente data-table">
-                    <tr>
-                        <th>Nombre</th>
-                        <td>{{ recibo.propiedad.contribuyente.nombre }} {{ recibo.propiedad.contribuyente.apellido_paterno }} {{ recibo.propiedad.contribuyente.apellido_materno }}</td>
-                    </tr>
-                    <tr>
-                        <th>Correo Electrónico</th>
-                        <td>{{ recibo.propiedad.contribuyente.correo_electronico }}</td>
-                    </tr>
-                    <tr>
-                        <th>Teléfono</th>
-                        <td>{{ recibo.propiedad.contribuyente.telefono }}</td>
-                    </tr>
-                </table>
-            
-           
+            <table class="table table-contribuyente data-table">
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ recibo.propiedad.contribuyente.nombre }} {{ recibo.propiedad.contribuyente.apellido_paterno }} {{ recibo.propiedad.contribuyente.apellido_materno }}</td>
+                </tr>
+                <tr>
+                    <th>Correo Electrónico</th>
+                    <td>{{ recibo.propiedad.contribuyente.correo_electronico }}</td>
+                </tr>
+                <tr>
+                    <th>Teléfono</th>
+                    <td>{{ recibo.propiedad.contribuyente.telefono }}</td>
+                </tr>
+            </table>
+
+
         </div>
     </div>
 
@@ -135,13 +180,13 @@
                 {% endfor %}
                 <tr>
                     <td colspan="3"></td>
-         
+
                     <td><strong>Total Descuento:</strong></td>
                     <td>${{ total_descuento }}</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
-                 
+
                     <td><strong>Total Pagado:</strong></td>
                     <td>${{ total_pagado }}</td>
                 </tr>
@@ -156,10 +201,12 @@
                 Este recibo ha sido generado electrónicamente y no requiere firma para su validez.
             </p>
             <p>
-                Para cualquier consulta o aclaración, por favor, contacte a nuestro servicio de atención al contribuyente:
+                Para cualquier consulta o aclaración, por favor, contacte a nuestro servicio de atención al
+                contribuyente:
                 <br>Email: sapaspa@empresa.com | Teléfono: (55) 1234-5678
             </p>
         </div>
     </div>
 </body>
+
 </html>

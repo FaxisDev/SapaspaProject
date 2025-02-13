@@ -44,7 +44,7 @@ def reciboPDFView(request, recibo_id, contribuyente_id):
     # Renderizar el template HTML a una cadena
     template = get_template("Pdfs/recibo.html")
     html = template.render(context)
-    return render(request, "Pdfs/recibo.html", context)
+    #return render(request, "Pdfs/recibo.html", context)
 
     # Crear un objeto BytesIO para almacenar el PDF
     result = BytesIO()
@@ -56,9 +56,9 @@ def reciboPDFView(request, recibo_id, contribuyente_id):
 
     if not pdf.err:
         response = HttpResponse(result.getvalue(), content_type="application/pdf")
-        response["Content-Disposition"] = (
+        """ response["Content-Disposition"] = (
             f'attachment; filename="recibo_{recibo_id}.pdf"'
-        )
+        ) """
         return response
     else:
         return Response(
