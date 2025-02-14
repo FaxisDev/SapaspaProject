@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
 from chartjs.views.lines import BaseLineChartView
+from calendar import month_name
+from collections import OrderedDict
 
 from Tarifas.models import Tarifa
 from Recibos.models import Pago, Recibo
@@ -72,34 +74,64 @@ def principalView(request):
 
 class PagosPorMesChartView(BaseLineChartView):
     def get_labels(self):
-        # Genera las etiquetas de los meses
-        hoy = timezone.now().date()
-        pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('total')).order_by('month')
-        return [item['month'].strftime('%b') for item in pagos_por_mes]
+        # Genera las etiquetas de los meses en español de enero a diciembre
+        meses_espanol = [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ]
+        return meses_espanol
 
     def get_providers(self):
-        # Proveedores de datos del gráfico
         return ["Pagos"]
 
     def get_data(self):
-        # Datos para el gráfico
         hoy = timezone.now().date()
-        pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Sum('total')).order_by('month')
-        return [[item['total'] for item in pagos_por_mes]]
+        
+        # Obtener los pagos por mes
+        pagos_por_mes = Pago.objects.filter(fecha_creacion__year=hoy.year) \
+            .annotate(month=TruncMonth('fecha_creacion')) \
+            .values('month') \
+            .annotate(total=Sum('total')) \
+            .order_by('month')
+
+        # Crear un diccionario con todos los meses inicializados en 0
+        data_dict = OrderedDict({i: 0 for i in range(1, 13)})
+
+        # Llenar los valores reales de los pagos
+        for item in pagos_por_mes:
+            mes = item['month'].month  # Obtener el número del mes
+            data_dict[mes] = item['total']
+
+        # Retornar los valores en orden
+        return [list(data_dict.values())]
 
 class RecibosPorMesChartView(BaseLineChartView):
     def get_labels(self):
-        # Genera las etiquetas de los meses
-        hoy = timezone.now().date()
-        recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Count('id')).order_by('month')
-        return [item['month'].strftime('%b') for item in recibos_por_mes]
-
-    def get_providers(self):
-        # Proveedores de datos del gráfico
-        return ["Recibos"]
+        # Meses en español en orden correcto
+        return [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ]
 
     def get_data(self):
-        # Datos para el gráfico
         hoy = timezone.now().date()
-        recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(total=Count('id')).order_by('month')
-        return [[item['total'] for item in recibos_por_mes]]
+
+        # Obtener los recibos por mes
+        recibos_por_mes = Recibo.objects.filter(fecha_creacion__year=hoy.year) \
+            .annotate(month=TruncMonth('fecha_creacion')) \
+            .values('month') \
+            .annotate(total=Count('id')) \
+            .order_by('month')
+
+        # Crear un diccionario con todos los meses inicializados en 0
+        data_dict = OrderedDict({i: 0 for i in range(1, 13)})
+
+        # Llenar los valores reales de los recibos
+        for item in recibos_por_mes:
+            mes = item['month'].month  # Obtener el número del mes
+            data_dict[mes] = item['total']
+
+        return [list(data_dict.values())]
+
+    def get_providers(self):
+        return ["Recibos"]

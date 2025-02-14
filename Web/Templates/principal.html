@@ -17,6 +17,59 @@ Panel de control
 {% block content %}
 <div class="container-fluid">
 
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+            <div class="card shadow-lg rounded-4">
+                <!-- Header de la Card -->
+                <div class="card-header bg-dark text-white text-center rounded-top">
+                    <h4 class="mb-0">
+                        <i class="fa-solid fa-house pe-2"></i> ¡Bienvenid@ al Panel de Control!
+                    </h4>
+                </div>
+    
+                <!-- Contenido Principal -->
+                <div class="card-body p-4">
+                    <p class="text-center">
+                        Gestiona y supervisa el sistema en tiempo real con acceso a información clave 
+                        sobre <strong>pagos</strong>, <strong>recibos</strong>, <strong>contribuyentes</strong> y <strong>propiedades</strong>. 
+                        Mantente informado y optimiza la administración con herramientas dinámicas.
+                    </p>
+    
+                    <hr>
+    
+                    <!-- Secciones de Información -->
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold"><i class="fa-solid fa-chart-simple pe-2"></i> Estadísticas</h5>
+                            <p class="small text-muted">
+                                Obtén métricas detalladas sobre pagos y recibos diarios, mensuales y anuales. 
+                                Analiza tendencias con gráficos interactivos y toma decisiones basadas en datos.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="fw-bold"><i class="fa-solid fa-file-alt pe-2"></i> Reportes</h5>
+                            <p class="small text-muted">
+                                Accede a informes detallados que te permitirán monitorear la actividad del sistema, 
+                                optimizar la gestión de recursos y mejorar la administración.
+                            </p>
+                        </div>
+                    </div>
+    
+                    <hr>
+    
+                    <!-- Mensaje Final -->
+                    <p class="mb-0 text-center">
+                        Aprovecha al máximo las herramientas del sistema para mejorar tu flujo de trabajo. 
+                        Para asistencia o más información, consulta la documentación oficial.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+
+
     <div class="row justify-content-md-center">
 
         <!-- Pagos Hoy -->
@@ -191,23 +244,36 @@ Panel de control
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         fetch("{% url 'pagos_por_mes_chart' %}")
-            .then(response => response.json())
-            .then(data => {
-                new Chart(document.getElementById('pagosPorMesChart'), {
-                    type: 'bar',
-                    data: {
-                        labels: data.labels,
-                        datasets: data.datasets
+        .then(response => response.json())
+        .then(data => {
+            const backgroundColors = [
+                "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40",
+                "#C9CBCF", "#60D394", "#D36060", "#6A0572", "#F8B400", "#B20600"
+            ];
+
+            // Agregar colores al dataset
+            data.datasets[0].backgroundColor = backgroundColors;
+
+            new Chart(document.getElementById('pagosPorMesChart'), {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: data.datasets
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Pagos Mensuales'
                     },
-                    options: {
-                        responsive: true,
-                        title: {
-                            display: true,
-                            text: 'Pagos Mensuales'
-                        },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
-                });
+                }
             });
+        });
 
         fetch("{% url 'recibos_por_mes_chart' %}")
             .then(response => response.json())
