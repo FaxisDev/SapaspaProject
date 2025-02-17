@@ -19,9 +19,9 @@ Panel de control
 
     <div class="row justify-content-center">
         <div class="col-lg-10 col-12">
-            <div class="card shadow-lg rounded-4">
+            <div class="card shadow rounded-2">
                 <!-- Header de la Card -->
-                <div class="card-header bg-dark text-white text-center rounded-top">
+                <div class="card-header bg-dark text-white text-center rounded-top p-3">
                     <h4 class="mb-0">
                         <i class="fa-solid fa-house pe-2"></i> ¡Bienvenid@ al Panel de Control!
                     </h4>
@@ -29,7 +29,7 @@ Panel de control
     
                 <!-- Contenido Principal -->
                 <div class="card-body p-4">
-                    <p class="text-center">
+                    <p class="text-center h5">
                         Gestiona y supervisa el sistema en tiempo real con acceso a información clave 
                         sobre <strong>pagos</strong>, <strong>recibos</strong>, <strong>contribuyentes</strong> y <strong>propiedades</strong>. 
                         Mantente informado y optimiza la administración con herramientas dinámicas.
@@ -41,14 +41,14 @@ Panel de control
                     <div class="row text-center">
                         <div class="col-md-6">
                             <h5 class="fw-bold"><i class="fa-solid fa-chart-simple pe-2"></i> Estadísticas</h5>
-                            <p class="small text-muted">
+                            <p class="h6 text-muted">
                                 Obtén métricas detalladas sobre pagos y recibos diarios, mensuales y anuales. 
                                 Analiza tendencias con gráficos interactivos y toma decisiones basadas en datos.
                             </p>
                         </div>
                         <div class="col-md-6">
                             <h5 class="fw-bold"><i class="fa-solid fa-file-alt pe-2"></i> Reportes</h5>
-                            <p class="small text-muted">
+                            <p class="h6 text-muted">
                                 Accede a informes detallados que te permitirán monitorear la actividad del sistema, 
                                 optimizar la gestión de recursos y mejorar la administración.
                             </p>
@@ -58,7 +58,7 @@ Panel de control
                     <hr>
     
                     <!-- Mensaje Final -->
-                    <p class="mb-0 text-center">
+                    <p class="mb-0 h5 text-center">
                         Aprovecha al máximo las herramientas del sistema para mejorar tu flujo de trabajo. 
                         Para asistencia o más información, consulta la documentación oficial.
                     </p>
@@ -167,7 +167,7 @@ Panel de control
             <div class="card custom-card card-border-purple">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">Contribuyentes Registrados Hoy</h5>
-                    <p class="card-text custom-card-text">{{ contribuyentes_hoy }}</p>
+                    <p class="card-text custom-card-text">{{ contribuyentes_hoy }}</p> 
                 </div>
             </div>
         </div>
@@ -264,7 +264,7 @@ Panel de control
                     responsive: true,
                     title: {
                         display: true,
-                        text: 'Pagos Mensuales'
+                        text: 'Pagos Mensuales {{ anio_actual }}'
                     },
                     scales: {
                         y: {
@@ -288,7 +288,7 @@ Panel de control
                         responsive: true,
                         title: {
                             display: true,
-                            text: 'Recibos Mensuales'
+                            text: 'Recibos Mensuales {{ anio_actual }}'
                         },
                     }
 

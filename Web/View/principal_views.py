@@ -67,6 +67,7 @@ def principalView(request):
         'fecha': hoy,
         'pagos_por_mes': list(pagos_por_mes),
         'recibos_por_mes': list(recibos_por_mes),
+        'anio_actual': hoy.year
     }
 
     return render(request, 'principal.html', context)
