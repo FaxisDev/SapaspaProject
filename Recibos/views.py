@@ -194,6 +194,7 @@ class ObtenerPagosListView(APIView):
 class GenerarReciboView(APIView):
     def post(self, request):
         id_propiedad = request.data.get("id_propiedad")
+        id_tipo_pago = request.data.get("id_tipo_pago") or 2
         pagos = request.data.get("pagos")
 
         if not id_propiedad or not pagos:
@@ -220,7 +221,7 @@ class GenerarReciboView(APIView):
 
         # Obtener TipoPago correspondiente (ejemplo: ID 2)
         try:
-            tipo_pago = TipoPago.objects.get(id=2)
+            tipo_pago = TipoPago.objects.get(id=id_tipo_pago)
         except TipoPago.DoesNotExist:
             return Response(
                 {"message": "Tipo de pago no encontrado."},

@@ -1,0 +1,103 @@
+{% extends 'Layouts/layout.html' %}
+
+{% block title %}
+Generar Recibos
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Panel de control</li>
+<li class="breadcrumb-item active" aria-current="page">Generar Recibos</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+
+      <!-- Mensajes de Django -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} text-center d-flex align-items-center fade show" role="alert">
+            <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      
+      {% if pagos %}
+        <div class="card rounded-3 shadow-lg border-0">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #007bff, #6610f2);">
+            <h5 class="card-title mb-0 text-center">
+              <i class="bi bi-receipt-cutoff"></i> Pagos Pendientes - Propiedad ID: {{ propiedad_id }}
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            
+            <!-- Tabla de pagos -->
+            <div class="table-responsive">
+              <table class="table table-hover align-middle text-center" aria-label="Lista de pagos pendientes">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Mes</th>
+                    <th>Servicio</th>
+                    <th>Sub Total</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  {% for pago in pagos %}
+                    <tr>
+                      <td>{{ pago.mes_pago }}</td>
+                      <td>{{ pago.servicio }}</td>
+                      <td>${{ pago.sub_total|floatformat:2 }}</td>
+                      <td>${{ pago.descuento|floatformat:2 }}</td>
+                      <td><strong>${{ pago.total|floatformat:2 }}</strong></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr class="bg-light">
+                    <td colspan="2" class="text-end fw-bold">Totales:</td>
+                    <td><strong>${{ suma_subtotal|floatformat:2 }}</strong></td>
+                    <td><strong>${{ suma_descuentos|floatformat:2 }}</strong></td>
+                    <td><strong class="text-success">${{ suma_total|floatformat:2 }}</strong></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- Formulario de pago -->
+            <div class="mt-4">
+              <form action="{% url 'procesar-pago' propiedad_id=propiedad_id %}" method="post" class="p-4 border rounded-3 shadow-sm bg-light">
+                {% csrf_token %}
+
+                <!-- Selección del tipo de pago -->
+                <div class="mb-3">
+                  <label for="id_tipo_pago" class="form-label fw-bold">
+                    <i class="bi bi-credit-card"></i> Tipo de Pago
+                  </label>
+                  <select class="form-select border-2" id="id_tipo_pago" name="id_tipo_pago" required>
+                    <option value="" disabled selected>Seleccione un tipo de pago</option>
+                    {% for tipo in tipos_pago %}
+                      <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <!-- Botón de pago -->
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-wallet2"></i> Pagar Ahora
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

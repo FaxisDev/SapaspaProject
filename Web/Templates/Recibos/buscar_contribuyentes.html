@@ -1,0 +1,184 @@
+{% extends 'Layouts/layout.html' %}
+
+{% block title %}
+Buscar Contribuyente
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+    Panel de control
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+    Buscar Contribuyente
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Tarjeta descriptiva -->
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">Instrucciones</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Complete los campos con valores exactos para buscar un contribuyente y ver sus propiedades
+                        asociadas.
+                        Si no ingresa ningún dato se mostrará un mensaje de advertencia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de búsqueda -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="card-title mb-0">Formulario de Búsqueda</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" action="{% url 'buscar-contribuyentes-page' %}">
+                        <div class="row">
+                            <!-- Campo ID -->
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="id" class="form-label">ID</label>
+                                <input type="text" name="id" id="id" class="form-control" placeholder="ID"
+                                    value="{{ id_val }}">
+                                <small class="form-text text-muted">Ingrese el ID exacto del contribuyente.</small>
+                            </div>
+                            <!-- Campo Folio Único -->
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="folio" class="form-label">Folio Único</label>
+                                <input type="text" name="folio" id="folio" class="form-control"
+                                    placeholder="Folio Único" value="{{ folio }}">
+                                <small class="form-text text-muted">Ingrese el folio único asignado al
+                                    contribuyente.</small>
+                            </div>
+                            <!-- Campo CURP -->
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="curp" class="form-label">CURP</label>
+                                <input type="text" name="curp" id="curp" class="form-control" placeholder="CURP"
+                                    value="{{ curp }}">
+                                <small class="form-text text-muted">Ingrese el CURP exacto del contribuyente.</small>
+                            </div>
+                            <!-- Campo Teléfono -->
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" name="telefono" id="telefono" class="form-control"
+                                    placeholder="Teléfono" value="{{ telefono }}">
+                                <small class="form-text text-muted">Ingrese el número de teléfono registrado.</small>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass me-1"></i> Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de error o advertencia -->
+    {% if message %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="alert alert-warning text-center" role="alert">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Resultados de la búsqueda -->
+    {% if contribuyentes %}
+    <div class="row justify-content-center">
+        <!-- Contribuyentes -->
+        <div class="col-12 col-md-8">
+            <div class="card shadow-sm mb-4 custom-card">
+                <div class="card-header text-white " style="background-color: rgb(39, 118, 116);">
+                    <h5 class="card-title mb-0 text-cente">Contribuyentes Encontrados</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Folio Único</th>
+                                    <th>CURP</th>
+                                    <th>Teléfono</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contribuyente in contribuyentes %}
+                                <tr>
+                                    <td>{{ contribuyente.id }}</td>
+                                    <td>{{ contribuyente.nombre }} {{ contribuyente.apellido_paterno }} {{ contribuyente.apellido_materno }}</td>
+                                    <td>{{ contribuyente.folio_unico }}</td>
+                                    <td>{{ contribuyente.curp }}</td>
+                                    <td>{{ contribuyente.telefono }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Propiedades Asociadas -->
+        <div class="col-12 col-md-8">
+            <div class="card custom-card mb-4">
+                <div class="card-header text-white" style="background-color: rgb(39, 71, 118);">
+                    <h5 class="card-title mb-0 text-center">Propiedades Asociadas</h5>
+                </div>
+                <div class="card-body">
+                    {% if propiedades %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Dirección</th>
+                                    <th>Fecha Último Pago</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for propiedad in propiedades %}
+                                <tr>
+                                    <td>{{ propiedad.id }}</td>
+                                    <td>
+                                        {{ propiedad.calle }} {{ propiedad.numero_exterior|default:"(S/N)" }}, entre {{ propiedad.entre_calles }}, en la colonia {{ propiedad.colonia }}, {{ propiedad.ciudad }}, {{ propiedad.estado }}, C.P {{ propiedad.codigo_postal }}.
+                                    </td>
+                                    <td>{{ propiedad.info_pago.fecha_ultimo_pago }}</td>
+                                    <td>{{ propiedad.info_pago.estatus }}</td>
+                                    <td>
+                                        <a href="{% url 'generar-pago-page' propiedad_id=propiedad.id %}"
+                                           class="btn text-white btn-sm" style="background-color: rgb(26, 135, 97);">
+                                           <i class="fa-solid fa-receipt me-1"></i> Pagar
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="mb-0">No hay propiedades asociadas.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'Layouts/layout.html' %}
+
+{% block title %}
+Procesar Pago
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Panel de control</li>
+<li class="breadcrumb-item">Generar Recibos</li>
+<li class="breadcrumb-item active" aria-current="page">Procesar Pago</li>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-wallet"></i> Confirmación de Pago</h5>
+            <div>
+                <i class="fas fa-info-circle" title="Revisa el estado del pago"></i>
+            </div>
+        </div>
+
+        <!-- Mostrar mensaje de éxito o error -->
+        {% if message %}
+            <div class="alert alert-success mt-3">
+                <i class="fas fa-check-circle"></i> {{ message }}
+            </div>
+        {% elif error_message %}
+            <div class="alert alert-danger mt-3">
+                <i class="fas fa-times-circle"></i> {{ error_message }}
+            </div>
+        {% endif %}
+
+        <!-- Mostrar información del pago -->
+        {% if recibo_id %}
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Pago Procesado Exitosamente</h5>
+            <p class="text-center mb-4"><i class="fas fa-receipt"></i> Recibo Generado: <strong>#{{ recibo_id }}</strong></p>
+            <p class="text-center mb-4"><i class="fas fa-user"></i> Contribuyente: <strong>{{ contribuyente_id }}</strong></p>
+
+            <!-- Botón de descarga PDF -->
+            <div class="text-center">
+                <a href="{% url 'Recibo de agua PDF' recibo_id=recibo_id contribuyente_id=contribuyente_id %}" class="btn btn-success">
+                    <i class="fas fa-download"></i> Descargar Recibo PDF
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

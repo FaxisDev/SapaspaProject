@@ -32,6 +32,7 @@ from Web.View.Estadisticas.grafica_deudores_view import graficaDeudoresView, Est
 from Web.View.Reportes.reporte_pagos_view import reportePagoslView
 from Web.View.Reportes.reporte_contribuyentes_view import reporteContribuyentesView
 from Web.View.Pdfs.recibo_pdf_view import reciboPDFView
+from Web.View.Recibos.generar_recibo_view import buscarContribuyentesView, generarRecibosView, procesarPagoView
 
 from django.conf.urls import include
 
@@ -47,6 +48,9 @@ urlpatterns = [
     path('estadisticas/grafica-deudores', graficaDeudoresView, name='estadistica-deudores-page'),
     path('reportes/pagos/', reportePagoslView, name='reporte-pagos-page'),
     path('reportes/contribuyentes/', reporteContribuyentesView, name='reporte-contribuyentes-page'),
+    path('recibos/buscar-contribuyentes/', buscarContribuyentesView, name='buscar-contribuyentes-page'),
+    path('recibos/generar-pago/<int:propiedad_id>/', generarRecibosView, name='generar-pago-page'),
+    path('recibos/procesar-pago/<int:propiedad_id>/', procesarPagoView, name='procesar-pago'),
     #PDF
     path('pdf/recibo/<recibo_id>/<contribuyente_id>/', reciboPDFView, name='Recibo de agua PDF'),
     #Graficos
