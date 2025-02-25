@@ -2,12 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Contribuyentes.models import Contribuyente
 from Propiedades.models import Propiedad
-from Servicios.models import Servicio
 from Recibos.models import TipoPago
 from Recibos.views import ObtenerPagosListView, GenerarReciboView
-import requests
 from rest_framework.test import APIRequestFactory
-from rest_framework import generics, status
 import json
 
 from rest_framework.response import Response  # type: ignore
