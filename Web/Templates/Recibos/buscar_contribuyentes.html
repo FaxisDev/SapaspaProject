@@ -120,7 +120,7 @@ Buscar Contribuyente
                                 {% for contribuyente in contribuyentes %}
                                 <tr>
                                     <td>{{ contribuyente.id }}</td>
-                                    <td>{{ contribuyente.nombre }} {{ contribuyente.apellido_paterno }} {{ contribuyente.apellido_materno }}</td>
+                                    <td>{{ contribuyente.nombre }} {{ contribuyente.apellido_paterno }} {{  contribuyente.apellido_materno }}</td>
                                     <td>{{ contribuyente.folio_unico }}</td>
                                     <td>{{ contribuyente.curp }}</td>
                                     <td>{{ contribuyente.telefono }}</td>
@@ -160,11 +160,21 @@ Buscar Contribuyente
                                         {{ propiedad.calle }} {{ propiedad.numero_exterior|default:"(S/N)" }}, entre {{ propiedad.entre_calles }}, en la colonia {{ propiedad.colonia }}, {{ propiedad.ciudad }}, {{ propiedad.estado }}, C.P {{ propiedad.codigo_postal }}.
                                     </td>
                                     <td>{{ propiedad.info_pago.fecha_ultimo_pago }}</td>
-                                    <td>{{ propiedad.info_pago.estatus }}</td>
+                                    <td>
+                                        {% if propiedad.info_pago.estatus == 'Al día' %}
+                                        <span class="badge rounded-1 p-2" style="border: 1px solid #39ca3e; color: #195B1C;">{{ propiedad.info_pago.estatus }}</span>
+                                        {% elif propiedad.info_pago.estatus == 'Pendiente' %}
+                                        <span class="badge rounded-1 p-2" style="border: 1px solid #caa339; color: #5B4919;"> {{ propiedad.info_pago.estatus }} </span>
+                                        {% elif propiedad.info_pago.estatus == 'Adeudo' %}
+                                        <span class="badge rounded-1 p-2" style="border: 1px solid #ca3b39; color: #5B1B19;"> {{ propiedad.info_pago.estatus }} </span>
+                                        {% else %}
+                                        <span class="badge rounded-1 p-2" style="border: 1px solid #939eba; color: #3C404C;"> No Definido </span>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{% url 'generar-pago-page' propiedad_id=propiedad.id %}"
-                                           class="btn text-white btn-sm" style="background-color: rgb(26, 135, 97);">
-                                           <i class="fa-solid fa-receipt me-1"></i> Pagar
+                                            class="btn text-white btn-sm" style="background-color: rgb(26, 135, 97);">
+                                            <i class="fa-solid fa-receipt me-1"></i> Pagar
                                         </a>
                                     </td>
                                 </tr>

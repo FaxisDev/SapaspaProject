@@ -65,40 +65,50 @@ def buscarContribuyentesView(request):
 
 @login_required
 def generarRecibosView(request, propiedad_id):
-    api_url = f"http://127.0.0.1:8000/api/obtener-pago?propiedad={propiedad_id}"
-
-    # Obtener los tipos de pago
-    tipos_pago = TipoPago.objects.all()
+    # Crear el request simulado con APIRequestFactory
+    factory = APIRequestFactory()
+    api_request = factory.get(f"/api/obtener-pago?propiedad={propiedad_id}")
     
-    try:
-        response = requests.get(api_url)
-        data = response.json()
-
-        # Si la API devuelve una lista, la asignamos directamente
-        pagos = data if isinstance(data, list) else []
-
-
-        if not pagos:
-            messages.info(request, "No hay pagos pendientes para esta propiedad.")
-            return render(request, "Recibos/generar_recibos.html", {"pagos": []})
-
-        # Calcular los totales
+    # Llamar directamente a la vista DRF
+    view = ObtenerPagosListView.as_view()
+    response = view(api_request)
+    
+    # Procesar la respuesta
+    if response.status_code == 200:
+        data = response.data
+        if isinstance(data, list):
+            pagos = data
+            message_api = None
+        else:
+            # La respuesta es un diccionario que contiene el "message"
+            pagos = []
+            message_api = data.get("message", "")
+    else:
+        pagos = []
+        message_api = "Error al obtener los pagos pendientes."
+    
+    # Calcular totales solo si hay pagos
+    if pagos:
         suma_subtotal = sum(pago["sub_total"] for pago in pagos)
         suma_descuentos = sum(pago["descuento"] for pago in pagos)
         suma_total = sum(pago["total"] for pago in pagos)
+    else:
+        suma_subtotal = suma_descuentos = suma_total = 0
 
-        return render(request, "Recibos/generar_recibos.html", {
-            "propiedad_id": propiedad_id,
-            "pagos": pagos,
-            "suma_subtotal": suma_subtotal,
-            "suma_descuentos": suma_descuentos,
-            "suma_total": suma_total,
-            "tipos_pago": tipos_pago,
-        })
+    # Obtener los tipos de pago
+    tipos_pago = TipoPago.objects.all()
 
-    except requests.exceptions.RequestException as e:
-        messages.error(request, f"Error al conectar con el servidor: {str(e)}")
-        return render(request, "Recibos/generar_recibos.html", {"pagos": []})
+    context = {
+        "propiedad_id": propiedad_id,
+        "pagos": pagos,
+        "message_api": message_api,  # Este valor se muestra en el template si existe
+        "suma_subtotal": suma_subtotal,
+        "suma_descuentos": suma_descuentos,
+        "suma_total": suma_total,
+        "tipos_pago": tipos_pago,
+    }
+
+    return render(request, "Recibos/generar_recibos.html", context)
     
 
 @login_required
