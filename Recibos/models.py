@@ -34,6 +34,7 @@ class Recibo(models.Model):
     def __str__(self):
         return f"{self.id} - {self.propiedad}"
 
+
     class Meta:
         verbose_name = "Recibo"
         verbose_name_plural = "Recibos"
