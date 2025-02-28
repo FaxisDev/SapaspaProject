@@ -62,7 +62,7 @@ class PropiedadAdmin(admin.ModelAdmin):
         "contribuyente__apellido_paterno",
         "contribuyente__apellido_materno",
     ]  # Busqueda de filtro
-    list_filter = [EstatusPagoFilter]  # Agregar el filtro aquí
+    list_filter = [EstatusPagoFilter,"tipo_propiedad"]  # Agregar el filtro aquí
     list_display = [
         "id",
         "contribuyente",
