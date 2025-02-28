@@ -65,7 +65,8 @@ class PropiedadAdmin(admin.ModelAdmin):
     list_filter = [EstatusPagoFilter,"tipo_propiedad"]  # Agregar el filtro aquí
     list_display = [
         "id",
-        "contribuyente",
+        "get_id_contribuyente",
+        "get_nombre_contribuyente",
         "tipo_propiedad",
         "numero_exterior",
         "entre_calles",
@@ -74,6 +75,16 @@ class PropiedadAdmin(admin.ModelAdmin):
         "get_estatus",  # Nuevo método para mostrar el estatus del pago
 
     ]  # Visualizacion de columnas en panel de admin
+
+    def get_id_contribuyente(self, obj):
+        return obj.contribuyente.id
+    get_id_contribuyente.admin_order_field = 'contribuyente__id'  # Esto habilita el ordenamiento por el campo 'id' del contribuyente
+    get_id_contribuyente.short_description = 'ID Cont.'  # Etiqueta personalizada para la columna
+
+    def get_nombre_contribuyente(self, obj):
+        return f"{obj.contribuyente.nombre} {obj.contribuyente.apellido_paterno} {obj.contribuyente.apellido_materno}"
+    get_nombre_contribuyente.short_description = 'Nombre de Contribuyente'  # Etiqueta personalizada para la columna
+    
 
     def get_fecha_ultimo_pago(self, obj):
         return obj.info_pago["fecha_ultimo_pago"]

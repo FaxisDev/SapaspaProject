@@ -6,8 +6,22 @@ from .models import Recibo, Pago, TipoPago
 
 class ReciboAdmin(admin.ModelAdmin):
     search_fields = ['id'] #Busqueda de filtro
-    list_display = ['id','propiedad','tipo_pago', 'fecha_creacion'] #Visualizacion de columnas en panel de admin
+    list_display = ['id','get_id_propiedad','get_id_contribuyente','get_nombre_contribuyente','tipo_pago', 'fecha_creacion'] #Visualizacion de columnas en panel de admin
     list_filter = ['tipo_pago','fecha_creacion'] 
+
+    def get_id_propiedad(self, obj):
+        return obj.propiedad.id
+    get_id_propiedad.admin_order_field = 'propiedad__id'  # Esto habilita el ordenamiento por el campo 'id' del contribuyente
+    get_id_propiedad.short_description = 'ID Propiedad'  # Etiqueta personalizada para la columna
+
+    def get_id_contribuyente(self, obj):
+        return obj.propiedad.contribuyente.id
+    get_id_contribuyente.admin_order_field = 'propiedad__contribuyente__id'  # Esto habilita el ordenamiento por el campo 'id' del contribuyente
+    get_id_contribuyente.short_description = 'ID Cont.'  # Etiqueta personalizada para la columna
+
+    def get_nombre_contribuyente(self, obj):
+        return f"{obj.propiedad.contribuyente.nombre} {obj.propiedad.contribuyente.apellido_paterno} {obj.propiedad.contribuyente.apellido_materno}"
+    get_nombre_contribuyente.short_description = 'Nombre de Contribuyente'  # Etiqueta personalizada para la columna
 
 class PagoAdmin(admin.ModelAdmin):
     search_fields = ['id'] #Busqueda de filtro
