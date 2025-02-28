@@ -20,7 +20,7 @@ def reporteContribuyentesView(request):
         apellido_materno = form.cleaned_data.get('apellido_materno')
         telefono = form.cleaned_data.get('telefono')
         correo_electronico = form.cleaned_data.get('correo_electronico')
-     
+        id_propiedad = form.cleaned_data.get('id_propiedad')
         tipo_propiedad = form.cleaned_data.get('tipo_propiedad')
         numero_interior = form.cleaned_data.get('numero_interior')
         numero_exterior = form.cleaned_data.get('numero_exterior')
@@ -42,7 +42,7 @@ def reporteContribuyentesView(request):
             Q(contribuyente__apellido_materno__icontains=apellido_materno) if apellido_materno else Q(),
             Q(contribuyente__telefono__icontains=telefono) if telefono else Q(),
             Q(contribuyente__correo_electronico__icontains=correo_electronico) if correo_electronico else Q(),
-
+            Q(id=id_propiedad) if id_propiedad else Q(),
             Q(numero_interior__icontains=numero_interior) if numero_interior else Q(),
             Q(numero_exterior__icontains=numero_exterior) if numero_exterior else Q(),
             Q(calle__icontains=calle) if calle else Q(),

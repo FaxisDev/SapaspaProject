@@ -5,113 +5,46 @@ Reporte de pagos
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item">
-    Panel de control
-</li>
-<li class="breadcrumb-item">
-    Reportes
-</li>
-<li class="breadcrumb-item active" aria-current="page">
-    Reporte de pagos
-</li>
+<li class="breadcrumb-item">Panel de control</li>
+<li class="breadcrumb-item">Reportes</li>
+<li class="breadcrumb-item active" aria-current="page">Reporte de pagos</li>
 {% endblock %}
-
 
 {% block content %}
 <div class="container-fluid">
-
     <div class="row justify-content-md-center">
-        <div class="col-12">
-            <div class="card custom-card card-border-blue mb-2">
+        <div class="col-12 col-md-10">
+            <!-- Card de Alerta -->
+            <div class="card custom-card card-border-blue mb-3">
                 <div class="card-body">
-                    <h5 class="card-title custom-card-title">Utilice el siguiente formulario para filtrar y exportar los
-                        registros de pagos. Complete los campos según sea necesario y haga clic en "Exportar" para
-                        descargar los resultados en formato CSV.</h5>
+                    <div class="alert alert-info mb-0" role="alert">
+                        <i class="fa-solid fa-info-circle"></i>
+                        Utilice el siguiente formulario para filtrar y exportar los registros de pagos. Complete los campos según sea necesario y haga clic en "Exportar" para descargar los resultados en formato CSV.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-12 col-md-8">
-            <form method="get" class="form-inline">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-blue mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="propiedad_id" class="card-text custom-card-text">Propiedad ID</label>
-                                    {{ form.propiedad_id }}
-                                </div>
+            <!-- Card del Formulario -->
+            <div class="card custom-card card-border-green mb-3">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">Formulario de Filtros</h5>
+                    <form method="get">
+                        <div class="row">
+                            {% for field in form %}
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                                <small class="text-muted d-block">
+                                    {{ field.help_text|default:"Ingrese el valor correspondiente." }}
+                                </small>
                             </div>
+                            {% endfor %}
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-green mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="recibo_id" class="card-text custom-card-text">Recibo ID</label>
-                                    {{ form.recibo_id }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-red mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="tarifa" class="card-text custom-card-text">Tarifa</label>
-                                    {{ form.tarifa }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-orange mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="tipo_pago" class="card-text custom-card-text">Tipo Pago</label>
-                                    {{ form.tipo_pago }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-cyan mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="servicio" class="card-text custom-card-text">Servicio</label>
-                                    {{ form.servicio }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-purple mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="fecha_inicio" class="card-text custom-card-text">Fecha
-                                        Inicio</label>
-                                    {{ form.fecha_inicio }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card custom-card card-border-blue mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="fecha_fin" class="card-text custom-card-text">Fecha Fin</label>
-                                    {{ form.fecha_fin }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group mb-2 text-center">
-                        <button type="submit" name="export" class="btn btn-secondary"><i
-                                class="fa-solid fa-file-lines pe-2"></i> Exportar</button>
-                    </div>
+                        <button type="submit" name="export" class="btn btn-secondary w-100">
+                            <i class="fa-solid fa-file-lines pe-2"></i> Exportar
+                        </button>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
