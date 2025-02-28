@@ -6,7 +6,8 @@ from .models import Recibo, Pago, TipoPago
 
 class ReciboAdmin(admin.ModelAdmin):
     search_fields = ['id'] #Busqueda de filtro
-    list_display = ['id','propiedad'] #Visualizacion de columnas en panel de admin
+    list_display = ['id','propiedad','tipo_pago', 'fecha_creacion'] #Visualizacion de columnas en panel de admin
+    list_filter = ['tipo_pago','fecha_creacion'] 
 
 class PagoAdmin(admin.ModelAdmin):
     search_fields = ['id'] #Busqueda de filtro
