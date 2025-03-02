@@ -58,3 +58,10 @@ deactivate
 #El resultado de codigo lo pegamos en el sitio:
 https://dreampuf.github.io/GraphvizOnline/
 
+#Generar Registros Aleatorios
+## Para Contribuyentes:
+``` python3 manage.py shell -c "from Contribuyentes.fake_registros import generate_fake_data; generate_fake_data()" ```
+
+## Para Propiedades:
+``` python3 manage.py shell -c "from Propiedades.fake_registros import generate_property_data; generate_property_data()" ```
+
